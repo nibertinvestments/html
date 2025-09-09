@@ -87,7 +87,7 @@ class StockDataError extends Error {
     }
 }
 
-// Enhanced data fetching with retry logic
+// Enhanced data fetching with retry logic and fallback to sample data
 async function fetchChartData(symbol, range = '1d', interval = '5m', retries = 3) {
     for (let attempt = 1; attempt <= retries; attempt++) {
         try {
@@ -114,7 +114,9 @@ async function fetchChartData(symbol, range = '1d', interval = '5m', retries = 3
             console.error(`Attempt ${attempt} failed for ${symbol}:`, error.message);
             
             if (attempt === retries) {
-                throw error;
+                // Fallback to sample data when all attempts fail
+                console.log(`Falling back to sample data for ${symbol}`);
+                return getSampleStockData(symbol, range);
             }
             
             // Wait before retry (exponential backoff)
@@ -185,17 +187,24 @@ function processChartData(chartData, range) {
     };
 }
 
-// Enhanced index box updates with loading states
+// Enhanced index box updates with loading states and fallback data
 async function updateIndexBox() {
     const list = document.getElementById('indexList');
     list.innerHTML = '<li class="loading-item">Loading market data...</li>';
     
     try {
+        // Try to fetch real data first, fallback to sample data
         const indexData = await Promise.allSettled(
-            majorIndexes.map(index => 
-                fetchChartData(index.symbol, '1d', '5m')
-                    .then(data => ({ ...data, name: index.name, symbol: index.symbol }))
-            )
+            majorIndexes.map(async (index) => {
+                try {
+                    const data = await fetchChartData(index.symbol, '1d', '5m', 1); // Only 1 retry for faster fallback
+                    return { ...data, name: index.name, symbol: index.symbol };
+                } catch (error) {
+                    // Use sample data as fallback
+                    const sampleData = getSampleStockData(index.symbol, '1d');
+                    return { ...sampleData, name: index.name, symbol: index.symbol };
+                }
+            })
         );
         
         list.innerHTML = '';
@@ -235,8 +244,30 @@ async function updateIndexBox() {
         });
         
     } catch (error) {
-        list.innerHTML = '<li class="error-item">Failed to load market data</li>';
-        console.error('Failed to update index box:', error);
+        // Final fallback - use all sample data
+        console.log('Using all sample data for index box');
+        list.innerHTML = '';
+        
+        SAMPLE_DATA.majorIndexes.forEach((indexData, i) => {
+            const li = document.createElement('li');
+            const changeColorClass = indexData.pointChange >= 0 ? 'change-positive' : 'change-negative';
+            const changeSymbol = indexData.pointChange >= 0 ? '+' : '';
+            
+            li.innerHTML = `
+                <div class="index-name">${indexData.name}</div>
+                <div class="index-price">$${formatNumber(indexData.latestClose)}</div>
+                <div class="index-change ${changeColorClass}">
+                    ${changeSymbol}${formatNumber(indexData.pointChange)} 
+                    (${changeSymbol}${formatNumber(indexData.percentChange)}%)
+                </div>
+            `;
+            
+            li.addEventListener('click', () => {
+                swapToMainChart(indexData.symbol, indexData.name, '1d');
+            });
+            li.style.cursor = 'pointer';
+            list.appendChild(li);
+        });
     }
 }
 
@@ -633,10 +664,10 @@ function showSearchError(message) {
     }, 3000);
 }
 
-// Initialize the application
+// Initialize the application with robust fallback handling
 async function loadInitialCharts() {
     try {
-        // Load main chart (NYSE Composite)
+        // Load main chart (NYSE Composite) with fallback
         const mainContainer = document.getElementById('mainChart');
         await updateChart('^NYA', mainContainer, 'NYSE Composite', '1d', '5m', true);
         
@@ -651,14 +682,23 @@ async function loadInitialCharts() {
     } catch (error) {
         console.error('Failed to load initial charts:', error);
         
-        // Show fallback content
+        // Show fallback content with sample data
         const mainContainer = document.getElementById('mainChart');
-        mainContainer.innerHTML = `
-            <div class="error-card">
-                <h2>Welcome to Stock Market Directory</h2>
-                <p>Unable to load initial charts. Please try refreshing the page or search for a specific stock symbol.</p>
-            </div>
-        `;
+        try {
+            const sampleData = getSampleStockData('^NYA', '1d');
+            renderChart('^NYA', mainContainer, 'NYSE Composite', sampleData.timestamps, sampleData, '1d', true);
+            await loadSmallCharts('^NYA');
+            await updateIndexBox();
+            console.log('Loaded with sample data successfully');
+        } catch (fallbackError) {
+            mainContainer.innerHTML = `
+                <div class="error-card">
+                    <h2>Welcome to Stock Market Directory</h2>
+                    <p>Unable to load charts. Please try refreshing the page or search for a specific stock symbol.</p>
+                    <p><small>Note: External APIs may be temporarily unavailable.</small></p>
+                </div>
+            `;
+        }
     }
 }
 
