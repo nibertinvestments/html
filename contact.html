@@ -2,172 +2,162 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-7710040313464623">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contact Nibert Investments LLC - Get in touch for technology consulting, blockchain development, AI solutions, and business intelligence services.">
-    <meta name="keywords" content="contact Nibert Investments, technology consulting, blockchain development contact, AI solutions inquiry, business consultation">
-    <meta name="author" content="Nibert Investments LLC">
+    <meta name="description" content="Contact the Indy Dining Guide team. Send us your restaurant recommendations, feedback, or business inquiries for Indianapolis dining and food establishments.">
+    <meta name="keywords" content="contact indy dining guide, Indianapolis restaurant contact, food directory contact, restaurant recommendations Indianapolis">
+    <meta name="author" content="Zingiestsnail98 Directories">
     <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Contact Nibert Investments LLC - Technology Consulting & Development">
-    <meta property="og:description" content="Reach out to Nibert Investments LLC for expert technology consulting, blockchain development, AI solutions, and custom financial technology services.">
+    
+    <meta property="og:title" content="Contact Indy Dining Guide - Restaurant Directory Indianapolis">
+    <meta property="og:description" content="Get in touch with the Indy Dining Guide team for restaurant recommendations, business inquiries, or feedback about Indianapolis dining establishments.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80">
+    <meta property="og:image:alt" content="Contact form for Indianapolis dining guide and restaurant directory.">
+    <meta property="og:url" content="https://zingiestsnail98directories.com/contact.html">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.stockmarketdirectory.org/contact.html">
-    <meta property="og:image" content="https://www.stockmarketdirectory.org/og-image.jpg">
-    <meta property="og:site_name" content="Stock Market Directory">
-    <link rel="canonical" href="https://www.stockmarketdirectory.org/contact.html">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>Contact Indy Dining Guide - Indianapolis Restaurant Directory</title>
+    <link rel="canonical" href="https://zingiestsnail98directories.com/contact.html">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap">
     <link rel="stylesheet" href="style.css">
-    <title>Contact Nibert Investments LLC - Technology Consulting & Development</title>
+
+    <!-- Google AdSense Auto Ads -->
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-7710040313464623"></amp-auto-ads>
 </head>
 <body>
     <header class="main-header">
-        <div class="header-content">
-            <h1 class="neon-title">Contact Us</h1>
-            <p class="header-subtitle">Let's Build the Future Together</p>
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <h1 class="logo">Indy Dining Guide</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="contact.html" class="nav-link active">Contact</a>
+                </div>
+            </nav>
+            <div class="hero-section">
+                <h1 class="hero-title">Contact Us</h1>
+                <p class="hero-subtitle">Have a restaurant recommendation? Questions about our dining guide? We'd love to hear from you!</p>
+            </div>
         </div>
     </header>
 
-    <nav class="main-nav">
-        <div class="nav-content">
-            <a href="index.html" class="nav-link">Home</a>
-            <a href="about.html" class="nav-link">About</a>
-            <a href="contact.html" class="nav-link active">Contact</a>
-        </div>
-    </nav>
+    <main class="main-content">
+        <div class="container">
+            <section class="contact-section">
+                <div class="contact-form-container">
+                    <div class="form-card">
+                        <h2 class="form-title">Send Us a Message</h2>
+                        <p class="form-description">Whether you're a restaurant owner, food enthusiast, or have suggestions for our Indianapolis dining guide, we welcome your input!</p>
+                        
+                        <form id="contactForm" class="contact-form" novalidate>
+                            <div class="form-group">
+                                <label for="subject" class="form-label">Subject *</label>
+                                <input 
+                                    type="text" 
+                                    id="subject" 
+                                    name="subject" 
+                                    class="form-input"
+                                    placeholder="Restaurant recommendation, feedback, business inquiry..."
+                                    required
+                                    aria-describedby="subject-help"
+                                >
+                                <small id="subject-help" class="form-help">Brief description of your message</small>
+                            </div>
 
-    <main class="main-container">
-        <div class="contact-content">
-            <section class="contact-intro">
-                <div class="content-card">
-                    <h2>Get In Touch</h2>
-                    <p>Ready to explore how Nibert Investments LLC can help transform your business with cutting-edge technology? Whether you're interested in blockchain development, AI solutions, business intelligence platforms, or custom financial technology, we're here to discuss your vision and provide expert guidance.</p>
-                    
-                    <p>Our team of experienced developers and technology consultants is committed to delivering innovative solutions that drive real results. Reach out to us today to start the conversation about your next project.</p>
+                            <div class="form-group">
+                                <label for="message" class="form-label">Message *</label>
+                                <textarea 
+                                    id="message" 
+                                    name="message" 
+                                    class="form-textarea"
+                                    placeholder="Please share your thoughts, restaurant recommendations, feedback, or business inquiries. Maximum 750 characters."
+                                    maxlength="750"
+                                    rows="6"
+                                    required
+                                    aria-describedby="char-counter message-help"
+                                ></textarea>
+                                <div class="form-footer">
+                                    <small id="message-help" class="form-help">Tell us about your favorite Indianapolis restaurants or suggestions for our guide</small>
+                                    <div id="char-counter" class="char-counter">
+                                        <span id="charCount">0</span>/750 characters
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                <span class="btn-text">Send Message</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+
+                            <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
+                        </form>
+                    </div>
                 </div>
-            </section>
 
-            <section class="contact-form-section">
-                <div class="form-container">
-                    <h2>Send Us a Message</h2>
-                    <form id="contactForm" class="contact-form">
-                        <div class="form-group">
-                            <label for="name">Full Name *</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email Address *</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="company">Company/Organization</label>
-                            <input type="text" id="company" name="company">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="subject">Subject *</label>
-                            <input type="text" id="subject" name="subject" required placeholder="Brief description of your inquiry">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Message *</label>
-                            <textarea id="message" name="message" required placeholder="Please provide details about your project, timeline, and any specific requirements. Maximum 750 characters." maxlength="750"></textarea>
-                            <div class="char-counter">
-                                <span id="charCount">0</span>/750 characters
+                <div class="contact-info">
+                    <div class="info-card">
+                        <h2 class="info-title">Get In Touch</h2>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">📧</div>
+                                <div class="contact-text">
+                                    <h3>Email Us</h3>
+                                    <p>Send your message directly to our team</p>
+                                    <a href="mailto:josh@nibertinvestments.com" class="contact-link">josh@nibertinvestments.com</a>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="services" name="services">
-                                <span class="checkmark"></span>
-                                I'm interested in learning about your technology services
-                            </label>
-                        </div>
-
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="updates" name="updates">
-                                <span class="checkmark"></span>
-                                Send me updates about new technologies and solutions
-                            </label>
-                        </div>
-
-                        <button type="submit" class="submit-btn" id="submitBtn">
-                            Send Message
-                        </button>
-                    </form>
-
-                    <div id="formStatus" class="form-status"></div>
-                </div>
-            </section>
-
-            <section class="contact-info">
-                <div class="content-card">
-                    <h2>Contact Information</h2>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">📧</div>
-                            <div class="contact-text">
-                                <h4>Email</h4>
-                                <p><a href="mailto:josh@nibertinvestments.com">josh@nibertinvestments.com</a></p>
+                            <div class="contact-item">
+                                <div class="contact-icon">🏢</div>
+                                <div class="contact-text">
+                                    <h3>About Our Directory</h3>
+                                    <p>Curated by Zingiestsnail98 Directories</p>
+                                    <p class="text-muted">Indianapolis dining enthusiasts</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="contact-item">
-                            <div class="contact-icon">🏢</div>
-                            <div class="contact-text">
-                                <h4>Company</h4>
-                                <p>Nibert Investments LLC</p>
+                            <div class="contact-item">
+                                <div class="contact-icon">🍽️</div>
+                                <div class="contact-text">
+                                    <h3>Restaurant Categories</h3>
+                                    <p>Fast Food • Casual • Fast Casual • Fine Dining • BBQ • Food Trucks</p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="contact-item">
-                            <div class="contact-icon">🌐</div>
-                            <div class="contact-text">
-                                <h4>Specialties</h4>
-                                <p>Blockchain Development, AI/ML Solutions, Business Intelligence, Financial Technology</p>
-                            </div>
-                        </div>
-
-                        <div class="contact-item">
-                            <div class="contact-icon">⏰</div>
-                            <div class="contact-text">
-                                <h4>Response Time</h4>
-                                <p>We typically respond to inquiries within 24-48 hours during business days</p>
+                            <div class="contact-item">
+                                <div class="contact-icon">📍</div>
+                                <div class="contact-text">
+                                    <h3>Coverage Area</h3>
+                                    <p>Indianapolis and surrounding areas including Carmel, Westfield, and Greenfield</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
 
-            <section class="services-overview">
-                <div class="content-card">
-                    <h2>How We Can Help</h2>
-                    <div class="services-grid">
-                        <div class="service-item">
-                            <h4>🔗 Blockchain Development</h4>
-                            <p>Smart contracts, DeFi protocols, multi-chain solutions, and Web3 applications</p>
-                        </div>
-                        <div class="service-item">
-                            <h4>🤖 AI & Machine Learning</h4>
-                            <p>Predictive models, data analysis, automated systems, and intelligent applications</p>
-                        </div>
-                        <div class="service-item">
-                            <h4>📊 Business Intelligence</h4>
-                            <p>Real-time dashboards, analytics platforms, and data visualization solutions</p>
-                        </div>
-                        <div class="service-item">
-                            <h4>💰 Financial Technology</h4>
-                            <p>Trading platforms, market data systems, and financial analysis tools</p>
-                        </div>
-                        <div class="service-item">
-                            <h4>🎨 Digital Assets</h4>
-                            <p>NFT development, generative art, and digital asset management platforms</p>
-                        </div>
-                        <div class="service-item">
-                            <h4>🔧 Custom Solutions</h4>
-                            <p>Tailored software development, API integration, and technology consulting</p>
+                    <div class="info-card">
+                        <h2 class="info-title">How We Can Help</h2>
+                        <div class="services-grid">
+                            <div class="service-item">
+                                <div class="service-icon">🔍</div>
+                                <h3>Restaurant Discovery</h3>
+                                <p>Find the perfect dining spot for any occasion in Indianapolis</p>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-icon">📝</div>
+                                <h3>Add Your Restaurant</h3>
+                                <p>Restaurant owners can submit their establishments for inclusion</p>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-icon">⭐</div>
+                                <h3>Reviews & Feedback</h3>
+                                <p>Share your dining experiences and help others discover great food</p>
+                            </div>
+                            <div class="service-item">
+                                <div class="service-icon">🎯</div>
+                                <h3>Local Expertise</h3>
+                                <p>Curated recommendations from Indianapolis food enthusiasts</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -176,14 +166,11 @@
     </main>
 
     <footer class="main-footer">
-        <div class="footer-content">
-            <p>&copy; 2025 Stock Market Directory. All rights reserved.</p>
-            <nav class="footer-nav">
-                <a href="index.html">Home</a> |
-                <a href="about.html">About</a> |
+        <div class="container">
+            <p>&copy; 2025 Zingiestsnail98 Directories. Discover the best food near me and eat in Indy with our curated list. 
+                <a href="https://zingiestsnail98directories.com">About Us</a> | 
                 <a href="contact.html">Contact</a>
-            </nav>
-            <p>Real-time stock charts powered by Yahoo Finance.</p>
+            </p>
         </div>
     </footer>
 
@@ -194,6 +181,8 @@
             const messageTextarea = document.getElementById('message');
             const charCount = document.getElementById('charCount');
             const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
             const formStatus = document.getElementById('formStatus');
 
             // Character counter for message textarea
@@ -201,12 +190,27 @@
                 const currentLength = this.value.length;
                 charCount.textContent = currentLength;
                 
+                // Update character counter styling based on length
                 if (currentLength > 700) {
-                    charCount.style.color = '#ef4444';
+                    charCount.style.color = '#dc2626';
+                    charCount.style.fontWeight = '600';
                 } else if (currentLength > 600) {
                     charCount.style.color = '#f59e0b';
+                    charCount.style.fontWeight = '500';
                 } else {
                     charCount.style.color = '#6b7280';
+                    charCount.style.fontWeight = '400';
+                }
+
+                // Update counter background when approaching limit
+                const counterContainer = document.getElementById('char-counter');
+                if (currentLength > 700) {
+                    counterContainer.style.backgroundColor = 'rgba(220, 38, 38, 0.1)';
+                    counterContainer.style.borderRadius = '4px';
+                    counterContainer.style.padding = '2px 6px';
+                } else {
+                    counterContainer.style.backgroundColor = 'transparent';
+                    counterContainer.style.padding = '0';
                 }
             });
 
@@ -216,76 +220,444 @@
                 
                 const formData = new FormData(form);
                 const data = {
-                    name: formData.get('name'),
-                    email: formData.get('email'),
-                    company: formData.get('company') || 'Not specified',
-                    subject: formData.get('subject'),
-                    message: formData.get('message'),
-                    services: formData.get('services') ? 'Yes' : 'No',
-                    updates: formData.get('updates') ? 'Yes' : 'No'
+                    subject: formData.get('subject').trim(),
+                    message: formData.get('message').trim()
                 };
 
                 // Validate required fields
-                if (!data.name || !data.email || !data.subject || !data.message) {
-                    showFormStatus('Please fill in all required fields.', 'error');
+                if (!data.subject || !data.message) {
+                    showFormStatus('Please fill in both the subject and message fields.', 'error');
                     return;
                 }
 
-                // Validate email format
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(data.email)) {
-                    showFormStatus('Please enter a valid email address.', 'error');
+                // Validate message length
+                if (data.message.length > 750) {
+                    showFormStatus('Message exceeds the 750 character limit. Please shorten your message.', 'error');
                     return;
                 }
 
                 // Show loading state
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending...';
+                setLoadingState(true);
 
-                // Create email content
-                const emailBody = `
-Name: ${data.name}
-Email: ${data.email}
-Company: ${data.company}
+                // Create email content with proper formatting
+                const emailSubject = `Indy Dining Guide Contact: ${data.subject}`;
+                const emailBody = `Hello,
+
+I'm contacting you through the Indy Dining Guide website.
+
 Subject: ${data.subject}
 
 Message:
 ${data.message}
 
-Additional Information:
-- Interested in services: ${data.services}
-- Updates requested: ${data.updates}
-
 ---
-Sent via Stock Market Directory Contact Form
-                `.trim();
+This message was sent via the Indy Dining Guide contact form
+Website: https://zingiestsnail98directories.com
+Timestamp: ${new Date().toLocaleString()}`;
 
                 // Create mailto link
-                const mailtoLink = `mailto:josh@nibertinvestments.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(emailBody)}`;
+                const mailtoLink = `mailto:josh@nibertinvestments.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
                 
-                // Open email client
-                window.location.href = mailtoLink;
-
-                // Reset form and show success message
+                // Simulate form processing delay for better UX
                 setTimeout(() => {
-                    form.reset();
-                    charCount.textContent = '0';
-                    charCount.style.color = '#6b7280';
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Send Message';
-                    showFormStatus('Your email client has been opened with the message pre-filled. Please send the email to complete your inquiry.', 'success');
+                    try {
+                        // Open email client
+                        window.location.href = mailtoLink;
+
+                        // Reset form and show success message
+                        form.reset();
+                        charCount.textContent = '0';
+                        charCount.style.color = '#6b7280';
+                        charCount.style.fontWeight = '400';
+                        document.getElementById('char-counter').style.backgroundColor = 'transparent';
+                        document.getElementById('char-counter').style.padding = '0';
+                        
+                        setLoadingState(false);
+                        showFormStatus('Your email client has been opened with the message pre-filled. Please send the email to complete your inquiry. Thank you for contacting us!', 'success');
+                        
+                        // Auto-hide success message after 10 seconds
+                        setTimeout(() => {
+                            formStatus.innerHTML = '';
+                        }, 10000);
+                        
+                    } catch (error) {
+                        setLoadingState(false);
+                        showFormStatus('There was an issue opening your email client. Please try again or send an email directly to josh@nibertinvestments.com', 'error');
+                    }
                 }, 1000);
             });
 
+            function setLoadingState(loading) {
+                if (loading) {
+                    submitBtn.disabled = true;
+                    btnText.style.display = 'none';
+                    btnLoading.style.display = 'inline';
+                    submitBtn.style.opacity = '0.8';
+                } else {
+                    submitBtn.disabled = false;
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    submitBtn.style.opacity = '1';
+                }
+            }
+
             function showFormStatus(message, type) {
-                formStatus.innerHTML = `<div class="status-message ${type}">${message}</div>`;
-                formStatus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                const statusClass = type === 'success' ? 'status-success' : 'status-error';
+                const icon = type === 'success' ? '✅' : '❌';
                 
-                setTimeout(() => {
-                    formStatus.innerHTML = '';
-                }, 8000);
+                formStatus.innerHTML = `
+                    <div class="status-message ${statusClass}">
+                        <span class="status-icon">${icon}</span>
+                        <span class="status-text">${message}</span>
+                    </div>
+                `;
+                
+                // Smooth scroll to status message
+                formStatus.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest' 
+                });
+
+                // Auto-hide error messages after 8 seconds
+                if (type === 'error') {
+                    setTimeout(() => {
+                        formStatus.innerHTML = '';
+                    }, 8000);
+                }
+            }
+
+            // Enhanced form validation feedback
+            const inputs = form.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+
+                input.addEventListener('input', function() {
+                    if (this.classList.contains('error')) {
+                        validateField(this);
+                    }
+                });
+            });
+
+            function validateField(field) {
+                const value = field.value.trim();
+                const isRequired = field.hasAttribute('required');
+                
+                if (isRequired && !value) {
+                    field.classList.add('error');
+                    field.setAttribute('aria-invalid', 'true');
+                } else if (field.id === 'message' && value.length > 750) {
+                    field.classList.add('error');
+                    field.setAttribute('aria-invalid', 'true');
+                } else {
+                    field.classList.remove('error');
+                    field.setAttribute('aria-invalid', 'false');
+                }
             }
         });
     </script>
+
+    <!-- Additional CSS for contact form styling -->
+    <style>
+        .contact-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .form-card, .info-card {
+            background: var(--metallic-white-gradient);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-light);
+            height: fit-content;
+        }
+
+        .form-title, .info-title {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--metallic-blue);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-description {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            background: var(--primary-bg);
+            transition: var(--transition-smooth);
+            font-family: var(--font-primary);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--metallic-blue);
+            box-shadow: 0 0 0 3px rgba(44, 90, 160, 0.1);
+        }
+
+        .form-input.error, .form-textarea.error {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 0.5rem;
+        }
+
+        .form-help {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .char-counter {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--metallic-blue-gradient);
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .submit-btn:disabled {
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-status {
+            margin-top: 1.5rem;
+        }
+
+        .status-message {
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+        }
+
+        .status-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #15803d;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .status-icon {
+            font-size: 1.2rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            border-left: 4px solid var(--metallic-blue);
+            transition: var(--transition-smooth);
+        }
+
+        .contact-item:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            min-width: 2rem;
+            text-align: center;
+        }
+
+        .contact-text h3 {
+            color: var(--metallic-blue);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .contact-text p {
+            margin: 0 0 0.25rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .text-muted {
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .contact-link {
+            color: var(--metallic-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition-fast);
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+            color: var(--metallic-blue-dark);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .service-item {
+            padding: 1rem;
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid var(--metallic-blue);
+            transition: var(--transition-smooth);
+        }
+
+        .service-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .service-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .service-item h3 {
+            color: var(--metallic-blue);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .service-item p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .contact-section {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-card, .info-card {
+                padding: 1.5rem;
+            }
+
+            .form-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-card, .info-card {
+                padding: 1rem;
+            }
+
+            .form-title, .info-title {
+                font-size: 1.5rem;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .contact-icon {
+                align-self: center;
+            }
+        }
+    </style>
 </body>
 </html>

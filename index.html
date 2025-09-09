@@ -1,97 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google Global Site Tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'AW-17410041036');
-    </script>
-
     <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-7710040313464623">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Track real-time stock market charts for NYSE, NASDAQ, S&P 500, Dow Jones, Russell 2000, and more. Interactive 1D, 10D, 1M, 3M, 6M, 1Y, 5Y, and Max views with live data.">
-    <meta name="keywords" content="stock market charts, real-time stock data, NYSE Composite, NASDAQ Composite, S&P 500, Dow Jones Industrial Average, Russell 2000, stock prices, financial charts, interactive stock tracker">
-    <meta name="author" content="Stock Directory Team">
+    <meta name="description" content="Find the best food near me in Indianapolis! Discover top 50 restaurants for dining in Indy, from fast food to fine dining, BBQ, and food trucks. Get food now with our ultimate guide to eating in Indy.">
+    <meta name="keywords" content="food near me, eat in Indy, food, get food near me, get food now, Indianapolis restaurants, best places to eat in Indianapolis, Indy dining, fast food Indy, fine dining Indianapolis, BBQ Indianapolis, food trucks Indy">
+    <meta name="author" content="Zingiestsnail98 Directories">
     <meta name="robots" content="index, follow">
-    <meta name="revisit-after" content="7 days">
-    <meta name="geo.region" content="US">
-    <meta name="geo.placename" content="United States">
-    <meta property="og:title" content="Stock Market Charts - Real-Time U.S. Indexes & Stocks">
-    <meta property="og:description" content="View live stock charts for major U.S. indexes and any stock with interactive time ranges: 1D, 10D, 1M, 3M, 6M, 1Y, 5Y, Max. Updated daily with Yahoo Finance data.">
+    
+    <meta property="og:title" content="Indy Dining Guide - Top 50 Restaurants to Eat in Indy">
+    <meta property="og:description" content="Looking for food near me? Explore the best places to eat in Indy with our curated list of 50 top restaurants. Get food now, from fast food to fine dining, BBQ, and food trucks.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80">
+    <meta property="og:image:alt" content="Delicious food spread on a table, showcasing various cuisines and dining experiences.">
+    <meta property="og:url" content="https://zingiestsnail98directories.com/">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.stockmarketdirectory.org">
-    <meta property="og:image" content="https://www.stockmarketdirectory.org/og-image.jpg">
-    <meta property="og:site_name" content="Stock Market Directory">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Stock Market Charts - Real-Time U.S. Indexes & Stocks">
-    <meta name="twitter:description" content="Live stock charts for NYSE, NASDAQ, S&P 500, DJIA, Russell 2000, and more. Switch between 1D, 10D, 1M, 3M, 6M, 1Y, 5Y, Max views instantly.">
-    <meta name="twitter:image" content="https://www.stockmarketdirectory.org/og-image.jpg">
-    <link rel="canonical" href="https://www.stockmarketdirectory.org">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>Indy Dining Guide - Best Food Near Me in Indianapolis</title>
+    <link rel="canonical" href="https://zingiestsnail98directories.com/">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Playfair+Display:wght@700&display=swap">
     <link rel="stylesheet" href="style.css">
 
-    <title>Stock Market Charts - Real-Time NYSE, NASDAQ, S&P 500, DJIA, Russell 2000</title>
-</head>
-<body>
     <!-- Google AdSense Auto Ads -->
     <amp-auto-ads type="adsense" data-ad-client="ca-pub-7710040313464623"></amp-auto-ads>
-    
+</head>
+<body>
     <header class="main-header">
-        <div class="header-content">
-            <h1 class="neon-title">Stock Market Charts</h1>
-            <p class="header-subtitle">Real-Time Market Data & Analytics</p>
+        <div class="container">
+            <nav class="navbar">
+                <div class="nav-brand">
+                    <h1 class="logo">Indy Dining Guide</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link active">Home</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+            </nav>
+            <div class="hero-section">
+                <h1 class="hero-title">Indy Dining Guide: Best Food Near Me</h1>
+                <p class="hero-subtitle">Craving food near me? Get food now and explore the top 50 places to eat in Indy, from sizzling BBQ to elegant fine dining, fast food favorites to vibrant food trucks. Your ultimate guide to dining in Indianapolis!</p>
+            </div>
         </div>
     </header>
 
-    <nav class="main-nav">
-        <div class="nav-content">
-            <a href="index.html" class="nav-link active">Home</a>
-            <a href="about.html" class="nav-link">About</a>
-            <a href="contact.html" class="nav-link">Contact</a>
-        </div>
-    </nav>
+    <main class="main-content">
+        <div class="container">
+            <section class="restaurant-categories">
+                
+                <div class="category-card" id="fast-food">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <h2 class="category-title">Fast Food</h2>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="restaurants-grid">
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Chick-fil-A</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">5240 N Keystone Ave, Indianapolis, IN 46220</p>
+                                    <p class="restaurant-phone">(317) 822-8500</p>
+                                    <p class="restaurant-price">Price: ★☆☆☆☆</p>
+                                    <a href="https://www.chick-fil-a.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Five Guys</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">5317 E 82nd St, Indianapolis, IN 46250</p>
+                                    <p class="restaurant-phone">(317) 259-0502</p>
+                                    <p class="restaurant-price">Price: ★☆☆☆☆</p>
+                                    <a href="https://www.fiveguys.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Shake Shack</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">8702 Keystone Crossing, Indianapolis, IN 46240</p>
+                                    <p class="restaurant-phone">(317) 663-9900</p>
+                                    <p class="restaurant-price">Price: ★☆☆☆☆</p>
+                                    <a href="https://www.shakeshack.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Steak 'n Shake</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">6208 Cambridge Way, Indianapolis, IN 46226</p>
+                                    <p class="restaurant-phone">(317) 897-1057</p>
+                                    <p class="restaurant-price">Price: ★☆☆☆☆</p>
+                                    <a href="https://www.steaknshake.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Wendy's</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">3640 N Keystone Ave, Indianapolis, IN 46218</p>
+                                    <p class="restaurant-phone">(317) 255-5240</p>
+                                    <p class="restaurant-price">Price: ★☆☆☆☆</p>
+                                    <a href="https://www.wendys.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <main class="main-container">
-        <section class="search-section">
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search stock symbol (e.g., AAPL)" aria-label="Search stock symbols" class="search-input">
-                <button onclick="searchStock()" class="search-btn">View Chart</button>
-            </div>
-        </section>
+                <div class="category-card" id="casual">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <h2 class="category-title">Casual Dining</h2>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="restaurants-grid">
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Yats</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">5363 N College Ave, Indianapolis, IN 46220</p>
+                                    <p class="restaurant-phone">(317) 253-8817</p>
+                                    <p class="restaurant-price">Price: ★★☆☆☆</p>
+                                    <a href="https://www.yatscajuncreole.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">The Mug</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">117 S Main St, Greenfield, IN 46140</p>
+                                    <p class="restaurant-phone">(317) 477-7550</p>
+                                    <p class="restaurant-price">Price: ★★☆☆☆</p>
+                                    <a href="https://www.themug.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="layout-container">
-            <aside class="index-box" id="indexBox">
-                <h3 class="sidebar-title">Major Indexes</h3>
-                <ul id="indexList" class="index-list"></ul>
-            </aside>
+                <div class="category-card" id="fast-casual">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <h2 class="category-title">Fast Casual</h2>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="restaurants-grid">
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">BRU Burger Bar</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">410 Massachusetts Ave, Indianapolis, IN 46204</p>
+                                    <p class="restaurant-phone">(317) 635-4278</p>
+                                    <p class="restaurant-price">Price: ★★★☆☆</p>
+                                    <a href="https://www.bruburgerbar.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Condado Tacos</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">530 Massachusetts Ave, Indianapolis, IN 46204</p>
+                                    <p class="restaurant-phone">(317) 800-1077</p>
+                                    <p class="restaurant-price">Price: ★★★☆☆</p>
+                                    <a href="https://www.condadotacos.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Blaze Pizza</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">913 Indiana Ave, Indianapolis, IN 46202</p>
+                                    <p class="restaurant-phone">(317) 624-1262</p>
+                                    <p class="restaurant-price">Price: ★★★☆☆</p>
+                                    <a href="https://www.blazepizza.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="main-content">
-                <section class="main-chart" id="mainChart"></section>
-                <section class="search-result" id="searchResult"></section>
-                <section class="chart-container" id="charts" aria-label="Major U.S. Index Charts"></section>
-            </div>
+                <div class="category-card" id="fine-dining">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <h2 class="category-title">Fine Dining</h2>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="restaurants-grid">
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Vida</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">601 E New York St, Indianapolis, IN 46202</p>
+                                    <p class="restaurant-phone">(317) 420-2323</p>
+                                    <p class="restaurant-price">Price: ★★★★★</p>
+                                    <a href="https://www.vidaindy.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Bluebeard</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">653 Virginia Ave, Indianapolis, IN 46203</p>
+                                    <p class="restaurant-phone">(317) 493-1406</p>
+                                    <p class="restaurant-price">Price: ★★★★☆</p>
+                                    <a href="https://www.bluebeardindy.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">St. Elmo Steak House</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">127 S Illinois St, Indianapolis, IN 46225</p>
+                                    <p class="restaurant-phone">(317) 635-0636</p>
+                                    <p class="restaurant-price">Price: ★★★★★</p>
+                                    <a href="https://www.stelmos.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Commission Row</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">110 S Delaware St, Indianapolis, IN 46204</p>
+                                    <p class="restaurant-phone">(317) 751-6500</p>
+                                    <p class="restaurant-price">Price: ★★★★★</p>
+                                    <a href="https://www.commissionrow.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Lone Pine</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">14550 Clay Terrace Blvd, Carmel, IN 46032</p>
+                                    <p class="restaurant-phone">(317) 669-6233</p>
+                                    <p class="restaurant-price">Price: ★★★★★</p>
+                                    <a href="https://www.lonepinecarmel.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Corridor</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">1709 N Illinois St, Indianapolis, IN 46202</p>
+                                    <p class="restaurant-phone">(317) 737-1921</p>
+                                    <p class="restaurant-price">Price: ★★★★☆</p>
+                                    <a href="https://www.corridorindy.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">His Place Eatery</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">6916 E 30th St, Indianapolis, IN 46219</p>
+                                    <p class="restaurant-phone">(317) 545-4890</p>
+                                    <p class="restaurant-price">Price: ★★★★☆</p>
+                                    <a href="https://www.hisplaceeatery.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Taxman Brewing</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">13 S Baldwin St, Bargersville, IN 46106</p>
+                                    <p class="restaurant-phone">(317) 388-8030</p>
+                                    <p class="restaurant-price">Price: ★★★★☆</p>
+                                    <a href="https://www.taxmanbrewing.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card" id="bbq">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <h2 class="category-title">BBQ</h2>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="restaurants-grid">
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Big Hoffa's Smokehouse</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">800 E Main St, Westfield, IN 46074</p>
+                                    <p class="restaurant-phone">(317) 896-9817</p>
+                                    <p class="restaurant-price">Price: ★★★☆☆</p>
+                                    <a href="https://www.bighoffas.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Half Liter BBQ</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">5301 Winthrop Ave, Indianapolis, IN 46220</p>
+                                    <p class="restaurant-phone">(317) 600-3559</p>
+                                    <p class="restaurant-price">Price: ★★★☆☆</p>
+                                    <a href="https://www.literhouse.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">City Barbeque</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">6215 Allisonville Rd, Indianapolis, IN 46220</p>
+                                    <p class="restaurant-phone">(317) 732-1330</p>
+                                    <p class="restaurant-price">Price: ★★★☆☆</p>
+                                    <a href="https://www.citybbq.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Johnson's BBQ Shack</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">2445 N Meridian St, Indianapolis, IN 46208</p>
+                                    <p class="restaurant-phone">(317) 243-6227</p>
+                                    <p class="restaurant-price">Price: ★★★☆☆</p>
+                                    <a href="https://www.johnsonsbbqshack.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category-card" id="food-trucks">
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <h2 class="category-title">Food Trucks</h2>
+                        <span class="toggle-icon">+</span>
+                    </div>
+                    <div class="category-content">
+                        <div class="restaurants-grid">
+                            <div class="restaurant-item">
+                                <h3 class="restaurant-name">Gaucho's Fire</h3>
+                                <div class="restaurant-details">
+                                    <p class="restaurant-address">Varies (Mobile)</p>
+                                    <p class="restaurant-phone">(317) 344-9921</p>
+                                    <p class="restaurant-price">Price: ★★☆☆☆</p>
+                                    <a href="https://www.gauchosfire.com" target="_blank" rel="noopener" class="restaurant-website">Visit Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
         </div>
     </main>
 
     <footer class="main-footer">
-        <div class="footer-content">
-            <p>&copy; 2025 Stock Market Directory. All rights reserved.</p>
-            <nav class="footer-nav">
-                <a href="index.html">Home</a> |
-                <a href="about.html">About</a> |
+        <div class="container">
+            <p>&copy; 2025 Zingiestsnail98 Directories. Discover the best food near me and eat in Indy with our curated list. 
+                <a href="https://zingiestsnail98directories.com">About Us</a> | 
                 <a href="contact.html">Contact</a>
-            </nav>
-            <p>Real-time stock charts powered by Yahoo Finance.</p>
+            </p>
         </div>
     </footer>
 
-    <!-- Local chart libraries and fallback data -->
-    <script src="sample-data.js"></script>
-    <script src="chart-fallback.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" onerror="console.log('Chart.js CDN failed, using fallback')"></script>
-    <script src="script.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
