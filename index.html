@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17410041036');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Track real-time stock market charts for NYSE, NASDAQ, S&P 500, Dow Jones, Russell 2000, and more. Interactive 1D, 10D, 1M, 3M, 6M, 1Y, 5Y, and Max views with live data.">
+    <meta name="keywords" content="stock market charts, real-time stock data, NYSE Composite, NASDAQ Composite, S&P 500, Dow Jones Industrial Average, Russell 2000, stock prices, financial charts, interactive stock tracker">
+    <meta name="author" content="Stock Directory Team">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+    <meta name="geo.region" content="US">
+    <meta name="geo.placename" content="United States">
+    <meta property="og:title" content="Stock Market Charts - Real-Time U.S. Indexes & Stocks">
+    <meta property="og:description" content="View live stock charts for major U.S. indexes and any stock with interactive time ranges: 1D, 10D, 1M, 3M, 6M, 1Y, 5Y, Max. Updated daily with Yahoo Finance data.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.stockmarketdirectory.org">
+    <meta property="og:image" content="https://www.stockmarketdirectory.org/og-image.jpg">
+    <meta property="og:site_name" content="Stock Market Directory">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stock Market Charts - Real-Time U.S. Indexes & Stocks">
+    <meta name="twitter:description" content="Live stock charts for NYSE, NASDAQ, S&P 500, DJIA, Russell 2000, and more. Switch between 1D, 10D, 1M, 3M, 6M, 1Y, 5Y, Max views instantly.">
+    <meta name="twitter:image" content="https://www.stockmarketdirectory.org/og-image.jpg">
+    <link rel="canonical" href="https://www.stockmarketdirectory.org">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" as="script">
+    <link rel="preload" href="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js" as="script">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Stock Market Charts - Real-Time NYSE, NASDAQ, S&P 500, DJIA, Russell 2000</title>
+</head>
+<body>
+    <!-- Google AdSense Auto Ads -->
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-7710040313464623"></amp-auto-ads>
+    
+    <header class="main-header">
+        <div class="header-content">
+            <h1 class="neon-title">Stock Market Charts</h1>
+            <p class="header-subtitle">Real-Time Market Data & Analytics</p>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="nav-content">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <main class="main-container">
+        <section class="search-section">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search stock symbol (e.g., AAPL)" aria-label="Search stock symbols" class="search-input">
+                <button onclick="searchStock()" class="search-btn">View Chart</button>
+            </div>
+        </section>
+
+        <div class="layout-container">
+            <aside class="index-box" id="indexBox">
+                <h3 class="sidebar-title">Major Indexes</h3>
+                <ul id="indexList" class="index-list"></ul>
+            </aside>
+
+            <div class="main-content">
+                <section class="main-chart" id="mainChart"></section>
+                <section class="search-result" id="searchResult"></section>
+                <section class="chart-container" id="charts" aria-label="Major U.S. Index Charts"></section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Stock Market Directory. All rights reserved.</p>
+            <nav class="footer-nav">
+                <a href="index.html">Home</a> |
+                <a href="about.html">About</a> |
+                <a href="contact.html">Contact</a>
+            </nav>
+            <p>Real-time stock charts powered by Yahoo Finance.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
