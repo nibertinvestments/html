@@ -28,7 +28,7 @@ const DiningGuide = {
         this.initializePreloadedCategories();
         
         this.state.isInitialized = true;
-        console.log('Indy Dining Guide initialized successfully');
+        // Application initialized successfully
     },
     
     // Bind all event listeners
@@ -90,17 +90,11 @@ const DiningGuide = {
         categoryHeader.setAttribute('aria-expanded', 'true');
         categoryContent.setAttribute('aria-hidden', 'false');
         
-        // Smooth reveal animation
-        categoryContent.style.display = 'block';
-        categoryContent.style.opacity = '0';
-        categoryContent.style.transform = 'translateY(-20px)';
-        
-        // Trigger animation
-        requestAnimationFrame(() => {
-            categoryContent.style.transition = `all ${this.config.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-            categoryContent.style.opacity = '1';
-            categoryContent.style.transform = 'translateY(0)';
-        });
+        // Clear any previous inline styles that might interfere
+        categoryContent.style.display = '';
+        categoryContent.style.opacity = '';
+        categoryContent.style.transform = '';
+        categoryContent.style.transition = '';
         
         // Animate restaurant items with stagger effect
         this.animateRestaurantItems(categoryContent, true);
@@ -114,6 +108,7 @@ const DiningGuide = {
         // Remove active state
         this.state.activeCategories.delete(categoryId);
         categoryHeader.classList.remove('active');
+        categoryContent.classList.remove('active');
         
         // Animate icon rotation
         toggleIcon.style.transform = 'rotate(0deg)';
@@ -122,26 +117,19 @@ const DiningGuide = {
         categoryHeader.setAttribute('aria-expanded', 'false');
         categoryContent.setAttribute('aria-hidden', 'true');
         
-        // Smooth hide animation
-        categoryContent.style.transition = `all ${this.config.animationDuration}ms cubic-bezier(0.4, 0, 0.2, 1)`;
-        categoryContent.style.opacity = '0';
-        categoryContent.style.transform = 'translateY(-20px)';
-        
-        // Hide after animation completes
-        setTimeout(() => {
-            if (!this.state.activeCategories.has(categoryId)) {
-                categoryContent.style.display = 'none';
-                categoryContent.classList.remove('active');
-            }
-        }, this.config.animationDuration);
+        // Clear any inline styles to let CSS take over
+        categoryContent.style.display = '';
+        categoryContent.style.opacity = '';
+        categoryContent.style.transform = '';
+        categoryContent.style.transition = '';
     },
     
     // Animate restaurant items with stagger effect
     animateRestaurantItems(categoryContent, show = true) {
         const restaurantItems = categoryContent.querySelectorAll('.restaurant-item');
         
-        restaurantItems.forEach((item, index) => {
-            const delay = index * 100; // Stagger animation by 100ms
+        restaurantItems.forEach((item, _index) => {
+            const delay = _index * 100; // Stagger animation by 100ms
             
             if (show) {
                 item.style.opacity = '0';
@@ -253,7 +241,7 @@ const DiningGuide = {
     // Enhance accessibility
     enhanceAccessibility() {
         // Add ARIA attributes to category headers
-        document.querySelectorAll('.category-header').forEach((header, index) => {
+        document.querySelectorAll('.category-header').forEach((header, _index) => {
             const categoryCard = header.closest('.category-card');
             const categoryContent = categoryCard.querySelector('.category-content');
             const categoryTitle = header.querySelector('.category-title');
@@ -446,17 +434,22 @@ const DiningGuide = {
 };
 
 // Global function for backward compatibility
+// eslint-disable-next-line no-unused-vars
 function toggleCategory(header) {
     DiningGuide.handleCategoryToggle({ target: header });
 }
 
 // Enhanced error handling
 window.addEventListener('error', (event) => {
-    console.error('Indy Dining Guide Error:', event.error);
+    // Log error for debugging (console allowed for error handling)
+    // eslint-disable-next-line no-console
+    if (console && console.error) {
+        // eslint-disable-next-line no-console
+        console.error('Indy Dining Guide Error:', event.error);
+    }
     // Graceful degradation - ensure basic functionality still works
     if (!DiningGuide.state.isInitialized) {
-        console.log('Falling back to basic toggle functionality');
-        // Basic toggle fallback would go here
+        // Basic toggle fallback would go here if needed
     }
 });
 
@@ -468,7 +461,8 @@ if (document.readyState === 'loading') {
 }
 
 // Export for testing or external use
-if (typeof module !== 'undefined' && module.exports) {
+/* eslint-env node */
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = DiningGuide;
 }
 
