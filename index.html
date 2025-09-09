@@ -10,30 +10,26 @@
         gtag('config', 'AW-17410041036');
     </script>
 
+    <!-- Google AdSense Auto Ads -->
+    <meta name="google-adsense-account" content="ca-pub-7710040313464623">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Track real-time stock market charts for NYSE, NASDAQ, S&P 500, Dow Jones, Russell 2000, and more. Interactive 1D, 10D, 1M, 3M, 6M, 1Y, 5Y, and Max views with live data.">
-    <meta name="keywords" content="stock market charts, real-time stock data, NYSE Composite, NASDAQ Composite, S&P 500, Dow Jones Industrial Average, Russell 2000, stock prices, financial charts, interactive stock tracker">
-    <meta name="author" content="Stock Directory Team">
+    <meta name="description" content="Find the best food near me in Indianapolis! Discover top 50 restaurants for dining in Indy, from fast food to fine dining, BBQ, and food trucks. Get food now with our ultimate guide to eating in Indy.">
+    <meta name="keywords" content="food near me, eat in Indy, food, get food near me, get food now, Indianapolis restaurants, best places to eat in Indianapolis, Indy dining, fast food Indy, fine dining Indianapolis, BBQ Indianapolis, food trucks Indy">
+    <meta name="author" content="Zingiestsnail98 Directories">
     <meta name="robots" content="index, follow">
-    <meta name="revisit-after" content="7 days">
-    <meta name="geo.region" content="US">
-    <meta name="geo.placename" content="United States">
-    <meta property="og:title" content="Stock Market Charts - Real-Time U.S. Indexes & Stocks">
-    <meta property="og:description" content="View live stock charts for major U.S. indexes and any stock with interactive time ranges: 1D, 10D, 1M, 3M, 6M, 1Y, 5Y, Max. Updated daily with Yahoo Finance data.">
+    
+    <meta property="og:title" content="Indy Dining Guide - Top 50 Restaurants to Eat in Indy">
+    <meta property="og:description" content="Looking for food near me? Explore the best places to eat in Indy with our curated list of 50 top restaurants. Get food now, from fast food to fine dining, BBQ, and food trucks.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=1920&amp;q=80">
+    <meta property="og:image:alt" content="Delicious food spread on a table, showcasing various cuisines and dining experiences.">
+    <meta property="og:url" content="https://zingiestsnail98directories.com/">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.stockmarketdirectory.org">
-    <meta property="og:image" content="https://www.stockmarketdirectory.org/og-image.jpg">
-    <meta property="og:site_name" content="Stock Market Directory">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Stock Market Charts - Real-Time U.S. Indexes & Stocks">
-    <meta name="twitter:description" content="Live stock charts for NYSE, NASDAQ, S&P 500, DJIA, Russell 2000, and more. Switch between 1D, 10D, 1M, 3M, 6M, 1Y, 5Y, Max views instantly.">
-    <meta name="twitter:image" content="https://www.stockmarketdirectory.org/og-image.jpg">
-    <link rel="canonical" href="https://www.stockmarketdirectory.org">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>Indy Dining Guide - Best Food Near Me in Indianapolis</title>
+    <link rel="canonical" href="https://zingiestsnail98directories.com/">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&amp;family=Playfair+Display:wght@700&amp;display=swap">
     <link rel="stylesheet" href="style.css">
-
-    <title>Stock Market Charts - Real-Time NYSE, NASDAQ, S&P 500, DJIA, Russell 2000</title>
 </head>
 <body>
     <!-- Google AdSense Auto Ads -->
@@ -41,57 +37,355 @@
     
     <header class="main-header">
         <div class="header-content">
-            <h1 class="neon-title">Stock Market Charts</h1>
-            <p class="header-subtitle">Real-Time Market Data & Analytics</p>
+            <h1 class="neon-title">Indy Dining Guide</h1>
+            <p class="header-subtitle">Best Food Near Me in Indianapolis</p>
         </div>
     </header>
 
     <nav class="main-nav">
         <div class="nav-content">
             <a href="index.html" class="nav-link active">Home</a>
-            <a href="about.html" class="nav-link">About</a>
             <a href="contact.html" class="nav-link">Contact</a>
         </div>
     </nav>
 
     <main class="main-container">
-        <section class="search-section">
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search stock symbol (e.g., AAPL)" aria-label="Search stock symbols" class="search-input">
-                <button onclick="searchStock()" class="search-btn">View Chart</button>
-            </div>
+        <section class="intro-section">
+            <p class="intro">Craving food near me? Get food now and explore the top 50 places to eat in Indy, from sizzling BBQ to elegant fine dining, fast food favorites to vibrant food trucks. Your ultimate guide to dining in Indianapolis!</p>
         </section>
 
-        <div class="layout-container">
-            <aside class="index-box" id="indexBox">
-                <h3 class="sidebar-title">Major Indexes</h3>
-                <ul id="indexList" class="index-list"></ul>
-            </aside>
-
-            <div class="main-content">
-                <section class="main-chart" id="mainChart"></section>
-                <section class="search-result" id="searchResult"></section>
-                <section class="chart-container" id="charts" aria-label="Major U.S. Index Charts"></section>
+        <section class="restaurant-categories">
+            <div class="category">
+                <div class="category-header" onclick="toggleCategory(this)">Fast Food</div>
+                <div class="category-content">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Website</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Owner/Chef</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                <td>Chick-fil-A</td>
+                                <td><a href="https://www.chick-fil-a.com" target="_blank" rel="noopener">chick-fil-a.com</a></td>
+                                <td>(317) 822-8500</td>
+                                <td>5240 N Keystone Ave, Indianapolis, IN 46220</td>
+                                <td>Dan Cathy</td>
+                                <td class="price">★☆☆☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>Five Guys</td>
+                                <td><a href="https://www.fiveguys.com" target="_blank" rel="noopener">fiveguys.com</a></td>
+                                <td>(317) 259-0502</td>
+                                <td>5317 E 82nd St, Indianapolis, IN 46250</td>
+                                <td>Jerry Murrell</td>
+                                <td class="price">★☆☆☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>Shake Shack</td>
+                                <td><a href="https://www.shakeshack.com" target="_blank" rel="noopener">shakeshack.com</a></td>
+                                <td>(317) 663-9900</td>
+                                <td>8702 Keystone Crossing, Indianapolis, IN 46240</td>
+                                <td>Randy Garutti</td>
+                                <td class="price">★☆☆☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>Steak 'n Shake</td>
+                                <td><a href="https://www.steaknshake.com" target="_blank" rel="noopener">steaknshake.com</a></td>
+                                <td>(317) 897-1057</td>
+                                <td>6208 Cambridge Way, Indianapolis, IN 46226</td>
+                                <td>Sardar Biglari</td>
+                                <td class="price">★☆☆☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>Wendy's</td>
+                                <td><a href="https://www.wendys.com" target="_blank" rel="noopener">wendys.com</a></td>
+                                <td>(317) 255-5240</td>
+                                <td>3640 N Keystone Ave, Indianapolis, IN 46218</td>
+                                <td>Todd Penegor</td>
+                                <td class="price">★☆☆☆☆</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+
+            <div class="category">
+                <div class="category-header" onclick="toggleCategory(this)">Casual</div>
+                <div class="category-content">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Website</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Owner/Chef</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                <td>Yats</td>
+                                <td><a href="https://www.yatscajuncreole.com" target="_blank" rel="noopener">yatscajuncreole.com</a></td>
+                                <td>(317) 253-8817</td>
+                                <td>5363 N College Ave, Indianapolis, IN 46220</td>
+                                <td>Joe Vuskovich</td>
+                                <td class="price">★★☆☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>The Mug</td>
+                                <td><a href="https://www.themug.com" target="_blank" rel="noopener">themug.com</a></td>
+                                <td>(317) 477-7550</td>
+                                <td>117 S Main St, Greenfield, IN 46140</td>
+                                <td>Chris Baggott</td>
+                                <td class="price">★★☆☆☆</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-header" onclick="toggleCategory(this)">Fast Casual</div>
+                <div class="category-content">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Website</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Owner/Chef</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                <td>BRU Burger Bar</td>
+                                <td><a href="https://www.bruburgerbar.com" target="_blank" rel="noopener">bruburgerbar.com</a></td>
+                                <td>(317) 635-4278</td>
+                                <td>410 Massachusetts Ave, Indianapolis, IN 46204</td>
+                                <td>Mike Cunningham</td>
+                                <td class="price">★★★☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>Condado Tacos</td>
+                                <td><a href="https://www.condadotacos.com" target="_blank" rel="noopener">condadotacos.com</a></td>
+                                <td>(317) 800-1077</td>
+                                <td>530 Massachusetts Ave, Indianapolis, IN 46204</td>
+                                <td>Jonathan Rans</td>
+                                <td class="price">★★★☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>Blaze Pizza</td>
+                                <td><a href="https://www.blazepizza.com" target="_blank" rel="noopener">blazepizza.com</a></td>
+                                <td>(317) 624-1262</td>
+                                <td>913 Indiana Ave, Indianapolis, IN 46202</td>
+                                <td>Rick Wetzel</td>
+                                <td class="price">★★★☆☆</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-header" onclick="toggleCategory(this)">Fine Dining</div>
+                <div class="category-content">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Website</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Owner/Chef</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                <td>Vida</td>
+                                <td><a href="https://www.vidaindy.com" target="_blank" rel="noopener">vidaindy.com</a></td>
+                                <td>(317) 420-2323</td>
+                                <td>601 E New York St, Indianapolis, IN 46202</td>
+                                <td>Thomas Melvin</td>
+                                <td class="price">★★★★★</td>
+                            </tr>
+                            <tr>
+                                <td>Bluebeard</td>
+                                <td><a href="https://www.bluebeardindy.com" target="_blank" rel="noopener">bluebeardindy.com</a></td>
+                                <td>(317) 493-1406</td>
+                                <td>653 Virginia Ave, Indianapolis, IN 46203</td>
+                                <td>Abbie Rogers</td>
+                                <td class="price">★★★★☆</td>
+                            </tr>
+                            <tr>
+                                <td>St. Elmo Steak House</td>
+                                <td><a href="https://www.stelmos.com" target="_blank" rel="noopener">stelmos.com</a></td>
+                                <td>(317) 635-0636</td>
+                                <td>127 S Illinois St, Indianapolis, IN 46225</td>
+                                <td>Jeff Dunaway</td>
+                                <td class="price">★★★★★</td>
+                            </tr>
+                            <tr>
+                                <td>Commission Row</td>
+                                <td><a href="https://www.commissionrow.com" target="_blank" rel="noopener">commissionrow.com</a></td>
+                                <td>(317) 751-6500</td>
+                                <td>110 S Delaware St, Indianapolis, IN 46204</td>
+                                <td>Adan Sandoval</td>
+                                <td class="price">★★★★★</td>
+                            </tr>
+                            <tr>
+                                <td>Lone Pine</td>
+                                <td><a href="https://www.lonepinecarmel.com" target="_blank" rel="noopener">lonepinecarmel.com</a></td>
+                                <td>(317) 669-6233</td>
+                                <td>14550 Clay Terrace Blvd, Carmel, IN 46032</td>
+                                <td>Josh Mazanowski</td>
+                                <td class="price">★★★★★</td>
+                            </tr>
+                            <tr>
+                                <td>Corridor</td>
+                                <td><a href="https://www.corridorindy.com" target="_blank" rel="noopener">corridorindy.com</a></td>
+                                <td>(317) 737-1921</td>
+                                <td>1709 N Illinois St, Indianapolis, IN 46202</td>
+                                <td>Brent Joseph</td>
+                                <td class="price">★★★★☆</td>
+                            </tr>
+                            <tr>
+                                <td>His Place Eatery</td>
+                                <td><a href="https://www.hisplaceeatery.com" target="_blank" rel="noopener">hisplaceeatery.com</a></td>
+                                <td>(317) 545-4890</td>
+                                <td>6916 E 30th St, Indianapolis, IN 46219</td>
+                                <td>James Jones</td>
+                                <td class="price">★★★★☆</td>
+                            </tr>
+                            <tr>
+                                <td>Taxman Brewing</td>
+                                <td><a href="https://www.taxmanbrewing.com" target="_blank" rel="noopener">taxmanbrewing.com</a></td>
+                                <td>(317) 388-8030</td>
+                                <td>13 S Baldwin St, Bargersville, IN 46106</td>
+                                <td>Nathan Huelsebusch</td>
+                                <td class="price">★★★★☆</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-header" onclick="toggleCategory(this)">BBQ</div>
+                <div class="category-content">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Website</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Owner/Chef</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                <td>Big Hoffa's Smokehouse</td>
+                                <td><a href="https://www.bighoffas.com" target="_blank" rel="noopener">bighoffas.com</a></td>
+                                <td>(317) 896-9817</td>
+                                <td>800 E Main St, Westfield, IN 46074</td>
+                                <td>Jeff Hoffa</td>
+                                <td class="price">★★★☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>Half Liter BBQ</td>
+                                <td><a href="https://www.literhouse.com" target="_blank" rel="noopener">literhouse.com</a></td>
+                                <td>(317) 600-3559</td>
+                                <td>5301 Winthrop Ave, Indianapolis, IN 46220</td>
+                                <td>Eddie Sahm</td>
+                                <td class="price">★★★☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>City Barbeque</td>
+                                <td><a href="https://www.citybbq.com" target="_blank" rel="noopener">citybbq.com</a></td>
+                                <td>(317) 732-1330</td>
+                                <td>6215 Allisonville Rd, Indianapolis, IN 46220</td>
+                                <td>Rick Malir</td>
+                                <td class="price">★★★☆☆</td>
+                            </tr>
+                            <tr>
+                                <td>Johnson's BBQ Shack</td>
+                                <td><a href="https://www.johnsonsbbqshack.com" target="_blank" rel="noopener">johnsonsbbqshack.com</a></td>
+                                <td>(317) 243-6227</td>
+                                <td>2445 N Meridian St, Indianapolis, IN 46208</td>
+                                <td>David Johnson</td>
+                                <td class="price">★★★☆☆</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-header" onclick="toggleCategory(this)">Food Trucks</div>
+                <div class="category-content">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <th>Website</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Owner/Chef</th>
+                                <th>Price</th>
+                            </tr>
+                            <tr>
+                                <td>Gaucho's Fire</td>
+                                <td><a href="https://www.gauchosfire.com" target="_blank" rel="noopener">gauchosfire.com</a></td>
+                                <td>(317) 344-9921</td>
+                                <td>Varies (Mobile)</td>
+                                <td>Jake Burry</td>
+                                <td class="price">★★☆☆☆</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="main-footer">
         <div class="footer-content">
-            <p>&copy; 2025 Stock Market Directory. All rights reserved.</p>
+            <p>&copy; 2025 Zingiestsnail98 Directories. Discover the best food near me and eat in Indy with our curated list.</p>
             <nav class="footer-nav">
                 <a href="index.html">Home</a> |
-                <a href="about.html">About</a> |
                 <a href="contact.html">Contact</a>
             </nav>
-            <p>Real-time stock charts powered by Yahoo Finance.</p>
         </div>
     </footer>
 
-    <!-- Local chart libraries and fallback data -->
-    <script src="sample-data.js"></script>
-    <script src="chart-fallback.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" onerror="console.log('Chart.js CDN failed, using fallback')"></script>
-    <script src="script.js"></script>
+    <script>
+        function toggleCategory(header) {
+            const content = header.nextElementSibling;
+            const isDisplayed = content.classList.contains('show');
+            
+            // Close all other categories
+            document.querySelectorAll('.category-content').forEach(c => {
+                c.classList.remove('show');
+            });
+            document.querySelectorAll('.category-header').forEach(h => {
+                h.classList.remove('active');
+            });
+            
+            // Toggle current category
+            if (!isDisplayed) {
+                content.classList.add('show');
+                header.classList.add('active');
+            }
+        }
+
+        // Show first category by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstCategory = document.querySelector('.category-header');
+            if (firstCategory) {
+                toggleCategory(firstCategory);
+            }
+        });
+    </script>
 </body>
 </html>
