@@ -1,0 +1,58 @@
+{
+  "name": "nibert-html-projects",
+  "version": "1.0.0",
+  "description": "A repository structure for housing multiple HTML projects with shared resources and development tools",
+  "main": "index.js",
+  "scripts": {
+    "serve": "live-server --port=3000 --open=/projects/",
+    "serve-project": "live-server --port=3000",
+    "lint:html": "htmlhint 'projects/**/*.html'",
+    "lint:css": "stylelint 'projects/**/*.css' 'shared/**/*.css'",
+    "lint:js": "eslint 'projects/**/*.js' 'shared/**/*.js'",
+    "lint": "npm run lint:html && npm run lint:css && npm run lint:js",
+    "format:css": "prettier --write 'projects/**/*.css' 'shared/**/*.css'",
+    "format:js": "prettier --write 'projects/**/*.js' 'shared/**/*.js'",
+    "format": "npm run format:css && npm run format:js",
+    "new-project": "node tools/scripts/create-project.js",
+    "validate": "html-validate 'projects/**/*.html'",
+    "optimize": "node tools/scripts/optimize-images.js",
+    "build": "npm run lint && npm run validate",
+    "dev": "npm run serve",
+    "help": "node tools/scripts/help.js"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "javascript",
+    "web-development",
+    "projects",
+    "template",
+    "boilerplate"
+  ],
+  "author": "Nibert Investments",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "htmlhint": "^1.1.4",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0",
+    "eslint": "^8.47.0",
+    "prettier": "^3.0.2",
+    "html-validate": "^8.2.0",
+    "imagemin": "^8.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nibertinvestments/html.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nibertinvestments/html/issues"
+  },
+  "homepage": "https://github.com/nibertinvestments/html#readme"
+}
