@@ -1,470 +1,519 @@
-// Indy Dining Guide - Professional Interactive JavaScript
-// Handles category toggling, smooth animations, and user interactions
+// Stock Market Directory - Real-time data from Polygon.io
+// No fake data - only real market data
 
 'use strict';
 
-// Configuration and state management
-const DiningGuide = {
-    // Configuration
-    config: {
-        animationDuration: 400,
-        scrollOffset: 100,
-        debounceDelay: 300
-    },
-    
-    // State
-    state: {
-        activeCategories: new Set(),
-        isInitialized: false
-    },
-    
-    // Initialize the application
-    init() {
-        if (this.state.isInitialized) return;
-        
-        this.bindEvents();
-        this.setupAnimations();
-        this.enhanceAccessibility();
-        this.initializePreloadedCategories();
-        
-        this.state.isInitialized = true;
-        // Application initialized successfully
-    },
-    
-    // Bind all event listeners
-    bindEvents() {
-        // Category toggle functionality
-        document.addEventListener('click', this.handleCategoryToggle.bind(this));
-        
-        // Keyboard navigation
-        document.addEventListener('keydown', this.handleKeyboardNavigation.bind(this));
-        
-        // Window events
-        window.addEventListener('resize', this.debounce(this.handleResize.bind(this), this.config.debounceDelay));
-        window.addEventListener('scroll', this.throttle(this.handleScroll.bind(this), 100));
-        
-        // Enhanced restaurant item interactions
-        this.bindRestaurantInteractions();
-    },
-    
-    // Handle category header clicks
-    handleCategoryToggle(event) {
-        const categoryHeader = event.target.closest('.category-header');
-        if (!categoryHeader) return;
-        
-        if (event.preventDefault) {
-            event.preventDefault();
-        }
-        
-        const categoryCard = categoryHeader.closest('.category-card');
-        const categoryContent = categoryCard.querySelector('.category-content');
-        const toggleIcon = categoryHeader.querySelector('.toggle-icon');
-        const categoryId = categoryCard.id;
-        
-        if (!categoryContent || !toggleIcon) return;
-        
-        // Toggle the category
-        const isCurrentlyActive = this.state.activeCategories.has(categoryId);
-        
-        if (isCurrentlyActive) {
-            this.closeCategory(categoryCard, categoryContent, categoryHeader, toggleIcon, categoryId);
-        } else {
-            this.openCategory(categoryCard, categoryContent, categoryHeader, toggleIcon, categoryId);
-        }
-        
-        // Announce change to screen readers
-        this.announceToggle(categoryHeader.querySelector('.category-title').textContent, !isCurrentlyActive);
-    },
-    
-    // Open a category with smooth animation
-    openCategory(categoryCard, categoryContent, categoryHeader, toggleIcon, categoryId) {
-        // Add active state
-        this.state.activeCategories.add(categoryId);
-        categoryHeader.classList.add('active');
-        categoryContent.classList.add('active');
-        
-        // Animate icon rotation
-        toggleIcon.style.transform = 'rotate(45deg)';
-        
-        // Set ARIA attributes
-        categoryHeader.setAttribute('aria-expanded', 'true');
-        categoryContent.setAttribute('aria-hidden', 'false');
-        
-        // Clear any previous inline styles that might interfere
-        categoryContent.style.display = '';
-        categoryContent.style.opacity = '';
-        categoryContent.style.transform = '';
-        categoryContent.style.transition = '';
-        
-        // Animate restaurant items with stagger effect
-        this.animateRestaurantItems(categoryContent, true);
-        
-        // Scroll into view if needed
-        this.scrollToCategory(categoryCard);
-    },
-    
-    // Close a category with smooth animation
-    closeCategory(categoryCard, categoryContent, categoryHeader, toggleIcon, categoryId) {
-        // Remove active state
-        this.state.activeCategories.delete(categoryId);
-        categoryHeader.classList.remove('active');
-        categoryContent.classList.remove('active');
-        
-        // Animate icon rotation
-        toggleIcon.style.transform = 'rotate(0deg)';
-        
-        // Set ARIA attributes
-        categoryHeader.setAttribute('aria-expanded', 'false');
-        categoryContent.setAttribute('aria-hidden', 'true');
-        
-        // Clear any inline styles to let CSS take over
-        categoryContent.style.display = '';
-        categoryContent.style.opacity = '';
-        categoryContent.style.transform = '';
-        categoryContent.style.transition = '';
-    },
-    
-    // Animate restaurant items with stagger effect
-    animateRestaurantItems(categoryContent, show = true) {
-        const restaurantItems = categoryContent.querySelectorAll('.restaurant-item');
-        
-        restaurantItems.forEach((item, _index) => {
-            const delay = _index * 100; // Stagger animation by 100ms
-            
-            if (show) {
-                item.style.opacity = '0';
-                item.style.transform = 'translateY(30px)';
-                
-                setTimeout(() => {
-                    item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateY(0)';
-                }, delay);
-            }
-        });
-    },
-    
-    // Scroll to category if it's not fully visible
-    scrollToCategory(categoryCard) {
-        const rect = categoryCard.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-        
-        if (rect.top < this.config.scrollOffset || rect.bottom > viewportHeight - this.config.scrollOffset) {
-            categoryCard.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest'
-            });
-        }
-    },
-    
-    // Handle keyboard navigation
-    handleKeyboardNavigation(event) {
-        const categoryHeader = event.target.closest('.category-header');
-        if (!categoryHeader) return;
-        
-        // Toggle on Enter or Space
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            categoryHeader.click();
-        }
-        
-        // Arrow key navigation between categories
-        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-            event.preventDefault();
-            this.navigateCategories(categoryHeader, event.key === 'ArrowDown');
-        }
-    },
-    
-    // Navigate between categories using arrow keys
-    navigateCategories(currentHeader, moveDown) {
-        const allHeaders = Array.from(document.querySelectorAll('.category-header'));
-        const currentIndex = allHeaders.indexOf(currentHeader);
-        
-        let targetIndex;
-        if (moveDown) {
-            targetIndex = currentIndex === allHeaders.length - 1 ? 0 : currentIndex + 1;
-        } else {
-            targetIndex = currentIndex === 0 ? allHeaders.length - 1 : currentIndex - 1;
-        }
-        
-        const targetHeader = allHeaders[targetIndex];
-        if (targetHeader) {
-            targetHeader.focus();
-            targetHeader.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
-        }
-    },
-    
-    // Bind enhanced restaurant item interactions
-    bindRestaurantInteractions() {
-        document.addEventListener('click', (event) => {
-            const websiteLink = event.target.closest('.restaurant-website');
-            if (websiteLink) {
-                // Add click animation
-                websiteLink.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    websiteLink.style.transform = '';
-                }, 150);
-            }
-        });
-        
-        // Add hover effects for restaurant items
-        document.addEventListener('mouseover', (event) => {
-            const restaurantItem = event.target.closest('.restaurant-item');
-            if (restaurantItem) {
-                this.highlightRestaurant(restaurantItem, true);
-            }
-        });
-        
-        document.addEventListener('mouseout', (event) => {
-            const restaurantItem = event.target.closest('.restaurant-item');
-            if (restaurantItem) {
-                this.highlightRestaurant(restaurantItem, false);
-            }
-        });
-    },
-    
-    // Highlight restaurant item
-    highlightRestaurant(item, highlight) {
-        if (highlight) {
-            item.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-            item.style.transform = 'translateY(-8px) scale(1.02)';
-            item.style.zIndex = '10';
-        } else {
-            item.style.transform = '';
-            item.style.zIndex = '';
-        }
-    },
-    
-    // Enhance accessibility
-    enhanceAccessibility() {
-        // Add ARIA attributes to category headers
-        document.querySelectorAll('.category-header').forEach((header, _index) => {
-            const categoryCard = header.closest('.category-card');
-            const categoryContent = categoryCard.querySelector('.category-content');
-            const categoryTitle = header.querySelector('.category-title');
-            
-            // Set up ARIA attributes
-            header.setAttribute('role', 'button');
-            header.setAttribute('tabindex', '0');
-            header.setAttribute('aria-expanded', 'false');
-            header.setAttribute('aria-controls', categoryCard.id + '-content');
-            
-            categoryContent.id = categoryCard.id + '-content';
-            categoryContent.setAttribute('aria-hidden', 'true');
-            categoryContent.setAttribute('aria-labelledby', categoryCard.id + '-title');
-            
-            categoryTitle.id = categoryCard.id + '-title';
-            
-            // Add descriptive aria-label
-            const restaurantCount = categoryContent.querySelectorAll('.restaurant-item').length;
-            header.setAttribute('aria-label', `${categoryTitle.textContent} section with ${restaurantCount} restaurants. Click to expand or collapse.`);
-        });
-        
-        // Add skip link for better navigation
-        this.addSkipLink();
-    },
-    
-    // Add skip link for accessibility
-    addSkipLink() {
-        const skipLink = document.createElement('a');
-        skipLink.href = '#main-content';
-        skipLink.textContent = 'Skip to main content';
-        skipLink.className = 'skip-link';
-        skipLink.style.cssText = `
-            position: absolute;
-            top: -40px;
-            left: 6px;
-            background: var(--metallic-blue);
-            color: white;
-            padding: 8px;
-            text-decoration: none;
-            border-radius: 4px;
-            z-index: 1000;
-            transition: top 0.3s;
-        `;
-        
-        skipLink.addEventListener('focus', () => {
-            skipLink.style.top = '6px';
-        });
-        
-        skipLink.addEventListener('blur', () => {
-            skipLink.style.top = '-40px';
-        });
-        
-        document.body.insertBefore(skipLink, document.body.firstChild);
-        
-        // Add id to main content
-        const mainContent = document.querySelector('.main-content');
-        if (mainContent) {
-            mainContent.id = 'main-content';
-        }
-    },
-    
-    // Initialize any preloaded categories (e.g., from URL hash)
-    initializePreloadedCategories() {
-        const hash = window.location.hash.slice(1);
-        if (hash) {
-            const targetCategory = document.getElementById(hash);
-            if (targetCategory && targetCategory.classList.contains('category-card')) {
-                const header = targetCategory.querySelector('.category-header');
-                if (header) {
-                    setTimeout(() => {
-                        header.click();
-                        targetCategory.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
-                }
-            }
-        }
-    },
-    
-    // Setup initial animations
-    setupAnimations() {
-        // Animate category cards on load
-        const categoryCards = document.querySelectorAll('.category-card');
-        categoryCards.forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(50px)';
-            
-            setTimeout(() => {
-                card.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            }, index * 150);
-        });
-        
-        // Add scroll-triggered animations
-        this.observeScrollAnimations();
-    },
-    
-    // Observe elements for scroll-triggered animations
-    observeScrollAnimations() {
-        if ('IntersectionObserver' in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate-in');
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -100px 0px'
-            });
-            
-            // Observe restaurant items for scroll animations
-            document.querySelectorAll('.restaurant-item').forEach(item => {
-                observer.observe(item);
-            });
-        }
-    },
-    
-    // Handle window resize
-    handleResize() {
-        // Recalculate any layout-dependent features
-        const activeCategories = Array.from(this.state.activeCategories);
-        activeCategories.forEach(categoryId => {
-            const categoryCard = document.getElementById(categoryId);
-            if (categoryCard) {
-                // Refresh any layout calculations if needed
-                this.refreshCategoryLayout(categoryCard);
-            }
-        });
-    },
-    
-    // Handle scroll events
-    handleScroll() {
-        // Add scroll-dependent features like header effects
-        const header = document.querySelector('.main-header');
-        if (header) {
-            const scrolled = window.scrollY > 100;
-            header.style.boxShadow = scrolled ? 'var(--shadow-heavy)' : 'var(--shadow-medium)';
-        }
-    },
-    
-    // Refresh category layout
-    refreshCategoryLayout(categoryCard) {
-        const categoryContent = categoryCard.querySelector('.category-content');
-        if (categoryContent && categoryContent.classList.contains('active')) {
-            // Force layout recalculation
-            categoryContent.style.height = 'auto';
-        }
-    },
-    
-    // Announce toggle action to screen readers
-    announceToggle(categoryName, isOpen) {
-        const announcement = document.createElement('div');
-        announcement.setAttribute('aria-live', 'polite');
-        announcement.setAttribute('aria-atomic', 'true');
-        announcement.style.cssText = 'position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;';
-        announcement.textContent = `${categoryName} section ${isOpen ? 'expanded' : 'collapsed'}`;
-        
-        document.body.appendChild(announcement);
-        
-        setTimeout(() => {
-            document.body.removeChild(announcement);
-        }, 1000);
-    },
-    
-    // Utility: Debounce function
-    debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    },
-    
-    // Utility: Throttle function
-    throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
+// Configuration
+const CONFIG = {
+    POLYGON_API_KEY: '8tJpGlsLeSouJEH7LN7Ltpc_HWQb10EJ',
+    POLYGON_BASE_URL: 'https://api.polygon.io',
+    S3_ENDPOINT: 'https://files.polygon.io',
+    S3_BUCKET: 'flatfiles',
+    S3_ACCESS_KEY: '4766cbb6-69a1-4309-af8b-7463694bfa0c',
+    S3_SECRET: '8tJpGlsLeSouJEH7LN7Ltpc_HWQb10EJ',
+    DEFAULT_SYMBOL: 'SPY',
+    CACHE_DURATION: 60000, // 1 minute cache
+    UPDATE_INTERVAL: 30000  // Update every 30 seconds
 };
 
-// Global function for backward compatibility
-// eslint-disable-next-line no-unused-vars
-function toggleCategory(header) {
-    DiningGuide.handleCategoryToggle({ target: header });
+// Application state
+const STATE = {
+    currentSymbol: CONFIG.DEFAULT_SYMBOL,
+    currentTimeRange: 365,
+    chart: null,
+    cache: new Map(),
+    isMarketOpen: false,
+    lastUpdate: null
+};
+
+// Stock Market Directory Application
+class StockMarketDirectory {
+    constructor() {
+        this.initializeEventListeners();
+        this.initializeChart();
+        this.loadDefaultData();
+        this.startPeriodicUpdates();
+        this.checkMarketStatus();
+    }
+
+    // Initialize event listeners
+    initializeEventListeners() {
+        const searchBtn = document.getElementById('search-btn');
+        const stockSymbol = document.getElementById('stock-symbol');
+        const timeRange = document.getElementById('time-range');
+
+        searchBtn?.addEventListener('click', () => this.searchStock());
+        stockSymbol?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.searchStock();
+        });
+        timeRange?.addEventListener('change', () => this.updateTimeRange());
+
+        // Index card clicks
+        document.querySelectorAll('.index-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const symbol = card.dataset.symbol;
+                if (symbol) {
+                    this.loadStockData(symbol);
+                }
+            });
+        });
+    }
+
+    // Initialize Chart.js chart
+    initializeChart() {
+        const canvas = document.getElementById('stock-chart');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        
+        STATE.chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Price',
+                    data: [],
+                    borderColor: '#45aaf2',
+                    backgroundColor: 'rgba(69, 170, 242, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: '#2d3748'
+                        },
+                        ticks: {
+                            color: '#b8c5d6'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: '#2d3748'
+                        },
+                        ticks: {
+                            color: '#b8c5d6',
+                            callback: function(value) {
+                                return '$' + value.toFixed(2);
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
+            }
+        });
+    }
+
+    // Load default data (SPY)
+    async loadDefaultData() {
+        await this.loadStockData(CONFIG.DEFAULT_SYMBOL);
+        await this.loadMarketIndices();
+    }
+
+    // Search for stock
+    async searchStock() {
+        const symbolInput = document.getElementById('stock-symbol');
+        const symbol = symbolInput?.value?.trim()?.toUpperCase();
+        
+        if (!symbol) {
+            this.showError('Please enter a stock symbol');
+            return;
+        }
+
+        await this.loadStockData(symbol);
+        symbolInput.value = '';
+    }
+
+    // Update time range
+    async updateTimeRange() {
+        const timeRange = document.getElementById('time-range');
+        const days = parseInt(timeRange?.value) || 365;
+        STATE.currentTimeRange = days;
+        await this.loadHistoricalData(STATE.currentSymbol, days);
+    }
+
+    // Load stock data (quote + historical)
+    async loadStockData(symbol) {
+        try {
+            this.showLoading(true);
+            STATE.currentSymbol = symbol;
+            
+            // Update title
+            const chartTitle = document.getElementById('chart-title');
+            if (chartTitle) {
+                chartTitle.textContent = `${symbol} - Loading...`;
+            }
+
+            // Load current quote and historical data in parallel
+            const [quote, historical] = await Promise.all([
+                this.getStockQuote(symbol),
+                this.loadHistoricalData(symbol, STATE.currentTimeRange)
+            ]);
+
+            if (quote) {
+                this.updateStockInfo(symbol, quote);
+            }
+
+        } catch (error) {
+            console.error('Error loading stock data:', error);
+            this.showError(`Failed to load data for ${symbol}. Please try again.`);
+        } finally {
+            this.showLoading(false);
+        }
+    }
+
+    // Get real-time stock quote from Polygon.io
+    async getStockQuote(symbol) {
+        const cacheKey = `quote_${symbol}`;
+        const cached = this.getCachedData(cacheKey);
+        if (cached) return cached;
+
+        try {
+            // Get current quote
+            const quoteUrl = `${CONFIG.POLYGON_BASE_URL}/v2/aggs/ticker/${symbol}/prev?apikey=${CONFIG.POLYGON_API_KEY}`;
+            const quoteResponse = await fetch(quoteUrl);
+            
+            if (!quoteResponse.ok) {
+                throw new Error(`Quote API error: ${quoteResponse.status}`);
+            }
+            
+            const quoteData = await quoteResponse.json();
+            
+            if (quoteData.status === 'OK' && quoteData.results && quoteData.results.length > 0) {
+                const result = quoteData.results[0];
+                
+                // Get additional ticker details
+                const detailsUrl = `${CONFIG.POLYGON_BASE_URL}/v3/reference/tickers/${symbol}?apikey=${CONFIG.POLYGON_API_KEY}`;
+                const detailsResponse = await fetch(detailsUrl);
+                let details = {};
+                
+                if (detailsResponse.ok) {
+                    const detailsData = await detailsResponse.json();
+                    if (detailsData.status === 'OK' && detailsData.results) {
+                        details = detailsData.results;
+                    }
+                }
+
+                const quote = {
+                    symbol: symbol,
+                    price: result.c, // close price
+                    change: result.c - result.o, // change from open
+                    changePercent: ((result.c - result.o) / result.o) * 100,
+                    volume: result.v,
+                    high: result.h,
+                    low: result.l,
+                    open: result.o,
+                    marketCap: details.market_cap || null,
+                    name: details.name || symbol
+                };
+
+                this.setCachedData(cacheKey, quote);
+                return quote;
+            } else {
+                throw new Error('No quote data available');
+            }
+        } catch (error) {
+            console.error('Error fetching quote:', error);
+            // Try to get data from S3 as fallback
+            return await this.getS3FallbackData(symbol);
+        }
+    }
+
+    // Load historical data from Polygon.io
+    async loadHistoricalData(symbol, days = 365) {
+        const cacheKey = `historical_${symbol}_${days}`;
+        const cached = this.getCachedData(cacheKey);
+        if (cached) {
+            this.updateChart(cached);
+            return cached;
+        }
+
+        try {
+            const endDate = new Date();
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() - days);
+
+            const multiplier = days <= 7 ? 1 : days <= 30 ? 1 : days <= 365 ? 1 : 1;
+            const timespan = days <= 7 ? 'hour' : days <= 30 ? 'day' : 'day';
+            
+            const formatDate = (date) => date.toISOString().split('T')[0];
+            
+            const url = `${CONFIG.POLYGON_BASE_URL}/v2/aggs/ticker/${symbol}/range/${multiplier}/${timespan}/${formatDate(startDate)}/${formatDate(endDate)}?adjusted=true&sort=asc&apikey=${CONFIG.POLYGON_API_KEY}`;
+            
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`Historical data API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            
+            if (data.status === 'OK' && data.results && data.results.length > 0) {
+                const chartData = data.results.map(item => ({
+                    date: new Date(item.t),
+                    price: item.c // closing price
+                }));
+
+                this.setCachedData(cacheKey, chartData);
+                this.updateChart(chartData);
+                return chartData;
+            } else {
+                throw new Error('No historical data available');
+            }
+        } catch (error) {
+            console.error('Error fetching historical data:', error);
+            // Try S3 fallback
+            return await this.getS3HistoricalFallback(symbol, days);
+        }
+    }
+
+    // Update chart with historical data
+    updateChart(data) {
+        if (!STATE.chart || !data || data.length === 0) return;
+
+        const labels = data.map(item => {
+            const date = new Date(item.date);
+            if (STATE.currentTimeRange <= 7) {
+                return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            } else if (STATE.currentTimeRange <= 30) {
+                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            } else {
+                return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+            }
+        });
+
+        const prices = data.map(item => item.price);
+
+        // Determine color based on price movement
+        const firstPrice = prices[0];
+        const lastPrice = prices[prices.length - 1];
+        const isPositive = lastPrice >= firstPrice;
+        
+        const color = isPositive ? '#26de81' : '#fc5c65';
+        const backgroundColor = isPositive ? 'rgba(38, 222, 129, 0.1)' : 'rgba(252, 92, 101, 0.1)';
+
+        STATE.chart.data.labels = labels;
+        STATE.chart.data.datasets[0].data = prices;
+        STATE.chart.data.datasets[0].borderColor = color;
+        STATE.chart.data.datasets[0].backgroundColor = backgroundColor;
+        STATE.chart.update('none');
+    }
+
+    // Update stock information display
+    updateStockInfo(symbol, quote) {
+        // Update title
+        const chartTitle = document.getElementById('chart-title');
+        if (chartTitle) {
+            chartTitle.textContent = `${quote.name || symbol} (${symbol})`;
+        }
+
+        // Update current price
+        const currentPrice = document.getElementById('current-price');
+        if (currentPrice && quote.price) {
+            currentPrice.textContent = `$${quote.price.toFixed(2)}`;
+        }
+
+        // Update price change
+        const priceChange = document.getElementById('price-change');
+        if (priceChange && quote.change !== undefined) {
+            const changeText = `${quote.change >= 0 ? '+' : ''}$${quote.change.toFixed(2)} (${quote.changePercent >= 0 ? '+' : ''}${quote.changePercent.toFixed(2)}%)`;
+            priceChange.textContent = changeText;
+            priceChange.className = `price-change ${quote.change >= 0 ? 'positive' : 'negative'}`;
+        }
+
+        // Update volume
+        const volume = document.getElementById('volume');
+        if (volume && quote.volume) {
+            volume.textContent = this.formatNumber(quote.volume);
+        }
+
+        // Update market cap
+        const marketCap = document.getElementById('market-cap');
+        if (marketCap && quote.marketCap) {
+            marketCap.textContent = this.formatCurrency(quote.marketCap);
+        }
+
+        // Update high/low (52-week data would need separate API call)
+        const high52w = document.getElementById('high-52w');
+        const low52w = document.getElementById('low-52w');
+        if (high52w && quote.high) high52w.textContent = `$${quote.high.toFixed(2)}`;
+        if (low52w && quote.low) low52w.textContent = `$${quote.low.toFixed(2)}`;
+    }
+
+    // Load market indices
+    async loadMarketIndices() {
+        const indices = ['SPY', 'DIA', 'QQQ'];
+        
+        for (const symbol of indices) {
+            try {
+                const quote = await this.getStockQuote(symbol);
+                if (quote) {
+                    this.updateIndexCard(symbol, quote);
+                }
+            } catch (error) {
+                console.error(`Error loading ${symbol}:`, error);
+            }
+        }
+    }
+
+    // Update index card
+    updateIndexCard(symbol, quote) {
+        const card = document.querySelector(`[data-symbol="${symbol}"]`);
+        if (!card) return;
+
+        const priceElement = card.querySelector('.index-price');
+        const changeElement = card.querySelector('.index-change');
+
+        if (priceElement && quote.price) {
+            priceElement.textContent = `$${quote.price.toFixed(2)}`;
+        }
+
+        if (changeElement && quote.change !== undefined) {
+            const changeText = `${quote.change >= 0 ? '+' : ''}$${quote.change.toFixed(2)} (${quote.changePercent >= 0 ? '+' : ''}${quote.changePercent.toFixed(2)}%)`;
+            changeElement.textContent = changeText;
+            changeElement.className = `index-change ${quote.change >= 0 ? 'positive' : 'negative'}`;
+        }
+    }
+
+    // S3 fallback data (when API fails)
+    async getS3FallbackData(symbol) {
+        try {
+            // This would require proper S3 authentication setup
+            // For now, return null and handle gracefully
+            console.warn(`S3 fallback not implemented for ${symbol}`);
+            return null;
+        } catch (error) {
+            console.error('S3 fallback failed:', error);
+            return null;
+        }
+    }
+
+    // S3 historical fallback
+    async getS3HistoricalFallback(symbol, days) {
+        try {
+            console.warn(`S3 historical fallback not implemented for ${symbol}`);
+            return [];
+        } catch (error) {
+            console.error('S3 historical fallback failed:', error);
+            return [];
+        }
+    }
+
+    // Check if market is open
+    checkMarketStatus() {
+        const now = new Date();
+        const day = now.getDay(); // 0 = Sunday, 6 = Saturday
+        const hour = now.getHours();
+        
+        // Market is open Monday-Friday, 9:30 AM - 4:00 PM EST
+        const isWeekday = day >= 1 && day <= 5;
+        const isMarketHours = hour >= 9 && hour < 16; // Simplified
+        
+        STATE.isMarketOpen = isWeekday && isMarketHours;
+        
+        const statusElement = document.getElementById('market-status');
+        if (statusElement) {
+            statusElement.textContent = STATE.isMarketOpen ? 'Market Open' : 'Market Closed';
+            statusElement.className = `market-status ${STATE.isMarketOpen ? 'open' : ''}`;
+        }
+    }
+
+    // Start periodic updates
+    startPeriodicUpdates() {
+        setInterval(() => {
+            this.checkMarketStatus();
+            if (STATE.isMarketOpen) {
+                this.loadStockData(STATE.currentSymbol);
+                this.loadMarketIndices();
+            }
+        }, CONFIG.UPDATE_INTERVAL);
+    }
+
+    // Cache management
+    getCachedData(key) {
+        const cached = STATE.cache.get(key);
+        if (cached && Date.now() - cached.timestamp < CONFIG.CACHE_DURATION) {
+            return cached.data;
+        }
+        return null;
+    }
+
+    setCachedData(key, data) {
+        STATE.cache.set(key, {
+            data: data,
+            timestamp: Date.now()
+        });
+    }
+
+    // Utility functions
+    formatNumber(num) {
+        if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
+        if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+        if (num >= 1e3) return (num / 1e3).toFixed(1) + 'K';
+        return num.toString();
+    }
+
+    formatCurrency(amount) {
+        if (amount >= 1e12) return `$${(amount / 1e12).toFixed(2)}T`;
+        if (amount >= 1e9) return `$${(amount / 1e9).toFixed(2)}B`;
+        if (amount >= 1e6) return `$${(amount / 1e6).toFixed(2)}M`;
+        return `$${amount.toLocaleString()}`;
+    }
+
+    showLoading(show) {
+        const elements = document.querySelectorAll('.loading-target');
+        elements.forEach(el => {
+            if (show) {
+                el.classList.add('loading');
+            } else {
+                el.classList.remove('loading');
+            }
+        });
+    }
+
+    showError(message) {
+        // Remove existing errors
+        document.querySelectorAll('.error').forEach(el => el.remove());
+        
+        // Create and show new error
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error';
+        errorDiv.textContent = message;
+        
+        const container = document.querySelector('.chart-display .container');
+        if (container) {
+            container.insertBefore(errorDiv, container.firstChild);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+    }
 }
 
-// Enhanced error handling
-window.addEventListener('error', (event) => {
-    // Log error for debugging (console allowed for error handling)
-    // eslint-disable-next-line no-console
-    if (console && console.error) {
-        // eslint-disable-next-line no-console
-        console.error('Indy Dining Guide Error:', event.error);
-    }
-    // Graceful degradation - ensure basic functionality still works
-    if (!DiningGuide.state.isInitialized) {
-        // Basic toggle fallback would go here if needed
-    }
+// Initialize app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new StockMarketDirectory();
 });
 
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => DiningGuide.init());
-} else {
-    DiningGuide.init();
-}
+// Handle errors gracefully
+window.addEventListener('error', (event) => {
+    console.error('Application error:', event.error);
+});
 
-// Export for testing or external use
-/* eslint-env node */
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = DiningGuide;
-}
-
-// Make available globally
-window.DiningGuide = DiningGuide;
+// Export for debugging
+window.StockMarketDirectory = StockMarketDirectory;
