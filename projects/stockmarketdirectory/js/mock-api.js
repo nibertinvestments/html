@@ -4,12 +4,12 @@
 const MockStockAPI = {
     // Mock stock data
     stockData: {
-        'AAPL': {
+        AAPL: {
             symbol: 'AAPL',
             name: 'Apple Inc.',
             current_price: 174.28,
             previous_close: 171.48,
-            change: 2.80,
+            change: 2.8,
             change_percent: 1.63,
             volume: 45678900,
             market_cap: 2800000000000,
@@ -22,7 +22,7 @@ const MockStockAPI = {
             market_state: 'CLOSED',
             timestamp: new Date().toISOString()
         },
-        'MSFT': {
+        MSFT: {
             symbol: 'MSFT',
             name: 'Microsoft Corporation',
             current_price: 378.85,
@@ -65,15 +65,15 @@ const MockStockAPI = {
         const days = this.getPeriodDays(period);
         const basePrice = this.stockData[symbol]?.current_price || 100;
         const data = [];
-        
+
         for (let i = days; i >= 0; i--) {
             const date = new Date();
             date.setDate(date.getDate() - i);
-            
+
             // Generate realistic price variation
             const variation = (Math.random() - 0.5) * 0.1; // ±5% variation
             const price = basePrice * (1 + variation * (i / days));
-            
+
             data.push({
                 date: date.toISOString().split('T')[0],
                 timestamp: date.getTime(),
@@ -84,7 +84,7 @@ const MockStockAPI = {
                 volume: Math.floor(Math.random() * 50000000) + 10000000
             });
         }
-        
+
         return data;
     },
 
@@ -134,23 +134,23 @@ const MockStockAPI = {
     async getStock(symbol) {
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 500));
-        
+
         const data = this.stockData[symbol.toUpperCase()];
         if (!data) {
             throw new Error(`No data found for symbol ${symbol}`);
         }
-        
+
         return data;
     },
 
     async getChartData(symbol, period = '1y') {
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 750));
-        
+
         if (!this.stockData[symbol.toUpperCase()]) {
             throw new Error(`No chart data found for symbol ${symbol}`);
         }
-        
+
         return {
             symbol: symbol.toUpperCase(),
             period: period,
@@ -164,21 +164,23 @@ const MockStockAPI = {
     async getMarketIndices() {
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 300));
-        
+
         return this.marketIndices;
     },
 
     async searchStocks(query) {
         // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 200));
-        
+
         const suggestions = [];
         const queryUpper = query.toUpperCase();
-        
+
         // Search through our mock data
         Object.values(this.stockData).forEach(stock => {
-            if (stock.symbol.includes(queryUpper) || 
-                stock.name.toUpperCase().includes(queryUpper)) {
+            if (
+                stock.symbol.includes(queryUpper) ||
+                stock.name.toUpperCase().includes(queryUpper)
+            ) {
                 suggestions.push({
                     symbol: stock.symbol,
                     name: stock.name,
@@ -186,7 +188,7 @@ const MockStockAPI = {
                 });
             }
         });
-        
+
         // Add some common stocks
         const commonStocks = [
             { symbol: 'TSLA', name: 'Tesla, Inc.', exchange: 'NASDAQ' },
@@ -195,14 +197,16 @@ const MockStockAPI = {
             { symbol: 'META', name: 'Meta Platforms, Inc.', exchange: 'NASDAQ' },
             { symbol: 'NVDA', name: 'NVIDIA Corporation', exchange: 'NASDAQ' }
         ];
-        
+
         commonStocks.forEach(stock => {
-            if (stock.symbol.includes(queryUpper) || 
-                stock.name.toUpperCase().includes(queryUpper)) {
+            if (
+                stock.symbol.includes(queryUpper) ||
+                stock.name.toUpperCase().includes(queryUpper)
+            ) {
                 suggestions.push(stock);
             }
         });
-        
+
         return { suggestions: suggestions.slice(0, 5) };
     }
 };
