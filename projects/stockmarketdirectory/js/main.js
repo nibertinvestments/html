@@ -1,76 +1,435 @@
 // Stock Market Directory JavaScript
 
+// Configuration
+const API_BASE_URL = 'http://localhost:5000/api';
+const UPDATE_INTERVAL = 30000; // 30 seconds
+const DEFAULT_SYMBOL = '^NYA'; // NYSE Composite Index
+const USE_MOCK_API = true; // Set to false when real API is available
+
+// Global variables
+let currentChart = null;
+let currentSymbol = DEFAULT_SYMBOL;
+let updateTimer = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Stock Market Directory loaded successfully!');
     
     // Initialize application
-    initializeNavigation();
+    initializeStockSearch();
+    initializeChart();
     initializeContactForm();
-    initializeCTAButton();
-    initializeAnimations();
+    initializeMarketIndices();
+    initializeAutoUpdates();
+    
+    // Load default chart (NYSE)
+    loadStockData(DEFAULT_SYMBOL);
 });
 
 /**
- * Initialize smooth scrolling navigation
+ * Initialize stock search functionality
  */
-function initializeNavigation() {
-    // Add smooth scrolling for navigation links
-    const navLinks = DOM.$$('nav a[href^="#"]');
+function initializeStockSearch() {
+    const searchInput = DOM.$('#stockSymbol');
+    const searchBtn = DOM.$('#searchBtn');
+    const suggestions = DOM.$('#searchSuggestions');
     
-    navLinks.forEach(link => {
-        DOM.on(link, 'click', function(e) {
-            e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
-            const targetSection = DOM.$(targetId);
-            
-            if (targetSection) {
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-                
-                // Update active navigation
-                DOM.setActiveClass('nav a', this, 'active');
-            }
-        });
+    if (!searchInput || !searchBtn) return;
+    
+    // Search button click
+    DOM.on(searchBtn, 'click', function() {
+        const symbol = searchInput.value.trim().toUpperCase();
+        if (symbol) {
+            loadStockData(symbol);
+            suggestions.style.display = 'none';
+        }
     });
     
-    // Update active navigation on scroll
-    function updateActiveNav() {
-        const sections = DOM.$$('section[id]');
-        const navItems = DOM.$$('nav a[href^="#"]');
-        let current = '';
+    // Enter key search
+    DOM.on(searchInput, 'keypress', function(e) {
+        if (e.key === 'Enter') {
+            const symbol = this.value.trim().toUpperCase();
+            if (symbol) {
+                loadStockData(symbol);
+                suggestions.style.display = 'none';
+            }
+        }
+    });
+    
+    // Real-time search suggestions (debounced)
+    let searchTimeout;
+    DOM.on(searchInput, 'input', function() {
+        clearTimeout(searchTimeout);
+        const query = this.value.trim();
         
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.clientHeight;
+        if (query.length < 1) {
+            suggestions.style.display = 'none';
+            return;
+        }
+        
+        searchTimeout = setTimeout(() => {
+            searchStockSymbols(query);
+        }, 300);
+    });
+    
+    // Hide suggestions when clicking outside
+    DOM.on(document, 'click', function(e) {
+        if (!searchInput.contains(e.target) && !suggestions.contains(e.target)) {
+            suggestions.style.display = 'none';
+        }
+    });
+}
+
+/**
+ * Search for stock symbols
+ */
+async function searchStockSymbols(query) {
+    try {
+        let data;
+        if (USE_MOCK_API && window.MockStockAPI) {
+            data = await window.MockStockAPI.searchStocks(query);
+        } else {
+            const response = await fetch(`${API_BASE_URL}/search/${encodeURIComponent(query)}`);
+            data = await response.json();
+        }
+        
+        const suggestions = DOM.$('#searchSuggestions');
+        suggestions.innerHTML = '';
+        
+        if (data.suggestions && data.suggestions.length > 0) {
+            data.suggestions.forEach(suggestion => {
+                const item = DOM.create('div', { className: 'suggestion-item' });
+                item.innerHTML = `
+                    <strong>${suggestion.symbol}</strong> - ${suggestion.name}
+                    <br><small>${suggestion.exchange}</small>
+                `;
+                
+                DOM.on(item, 'click', function() {
+                    DOM.$('#stockSymbol').value = suggestion.symbol;
+                    loadStockData(suggestion.symbol);
+                    suggestions.style.display = 'none';
+                });
+                
+                suggestions.appendChild(item);
+            });
             
-            if (window.pageYOffset >= sectionTop) {
-                current = section.getAttribute('id');
+            suggestions.style.display = 'block';
+        } else {
+            suggestions.style.display = 'none';
+        }
+        
+    } catch (error) {
+        console.error('Error searching stocks:', error);
+    }
+}
+
+/**
+ * Load stock data and update display
+ */
+async function loadStockData(symbol) {
+    try {
+        showLoadingState();
+        currentSymbol = symbol;
+        
+        // Fetch stock data
+        const [stockData, chartData] = await Promise.all([
+            fetchStockData(symbol),
+            fetchChartData(symbol, DOM.$('#timeRange')?.value || '1y')
+        ]);
+        
+        if (stockData && chartData) {
+            updateStockDisplay(stockData);
+            updateChart(chartData);
+            updateTitle(stockData);
+        }
+        
+    } catch (error) {
+        console.error('Error loading stock data:', error);
+        showError(`Failed to load data for ${symbol}`);
+    }
+}
+
+/**
+ * Fetch stock data from API
+ */
+async function fetchStockData(symbol) {
+    try {
+        if (USE_MOCK_API && window.MockStockAPI) {
+            return await window.MockStockAPI.getStock(symbol);
+        } else {
+            const response = await fetch(`${API_BASE_URL}/stock/${encodeURIComponent(symbol)}`);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return await response.json();
+        }
+    } catch (error) {
+        console.error(`Error fetching stock data for ${symbol}:`, error);
+        return null;
+    }
+}
+
+/**
+ * Fetch chart data from API
+ */
+async function fetchChartData(symbol, period = '1y') {
+    try {
+        if (USE_MOCK_API && window.MockStockAPI) {
+            return await window.MockStockAPI.getChartData(symbol, period);
+        } else {
+            const response = await fetch(`${API_BASE_URL}/stock/${encodeURIComponent(symbol)}/chart?period=${period}`);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return await response.json();
+        }
+    } catch (error) {
+        console.error(`Error fetching chart data for ${symbol}:`, error);
+        return null;
+    }
+}
+
+/**
+ * Update stock price display
+ */
+function updateStockDisplay(stockData) {
+    // Update current price
+    const priceElement = DOM.$('#currentPrice');
+    const changeElement = DOM.$('#priceChange');
+    const statusElement = DOM.$('#marketStatus');
+    
+    if (priceElement) {
+        priceElement.textContent = `$${stockData.current_price}`;
+    }
+    
+    if (changeElement) {
+        const changeText = `${stockData.change >= 0 ? '+' : ''}${stockData.change} (${stockData.change_percent.toFixed(2)}%)`;
+        changeElement.textContent = changeText;
+        changeElement.className = `price-change ${stockData.change >= 0 ? 'positive' : 'negative'}`;
+    }
+    
+    if (statusElement) {
+        statusElement.textContent = stockData.market_state || 'Market Closed';
+    }
+    
+    // Update stock info
+    updateStockInfo(stockData);
+}
+
+/**
+ * Update stock information grid
+ */
+function updateStockInfo(stockData) {
+    const infoMappings = {
+        'volume': formatNumber(stockData.volume),
+        'marketCap': formatMarketCap(stockData.market_cap),
+        'peRatio': stockData.pe_ratio ? stockData.pe_ratio.toFixed(2) : 'N/A',
+        'high52w': stockData.high_52w ? `$${stockData.high_52w}` : 'N/A',
+        'low52w': stockData.low_52w ? `$${stockData.low_52w}` : 'N/A',
+        'dividendYield': stockData.dividend_yield ? `${(stockData.dividend_yield * 100).toFixed(2)}%` : 'N/A'
+    };
+    
+    Object.entries(infoMappings).forEach(([id, value]) => {
+        const element = DOM.$(`#${id}`);
+        if (element) {
+            element.textContent = value;
+        }
+    });
+}
+
+/**
+ * Update chart title
+ */
+function updateTitle(stockData) {
+    const titleElement = DOM.$('#chartTitle');
+    if (titleElement && stockData.name) {
+        titleElement.textContent = `${stockData.name} (${stockData.symbol})`;
+    }
+}
+
+/**
+ * Initialize Chart.js chart
+ */
+function initializeChart() {
+    const canvas = DOM.$('#stockChart');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    currentChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Price',
+                data: [],
+                borderColor: '#C41E3A',
+                backgroundColor: 'rgba(196, 30, 58, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    display: true,
+                    grid: {
+                        color: '#333333'
+                    },
+                    ticks: {
+                        color: '#000000'
+                    }
+                },
+                y: {
+                    display: true,
+                    grid: {
+                        color: '#333333'
+                    },
+                    ticks: {
+                        color: '#000000',
+                        callback: function(value) {
+                            return '$' + value.toFixed(2);
+                        }
+                    }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            }
+        }
+    });
+    
+    // Time range selector
+    const timeRange = DOM.$('#timeRange');
+    if (timeRange) {
+        DOM.on(timeRange, 'change', function() {
+            if (currentSymbol) {
+                fetchChartData(currentSymbol, this.value).then(chartData => {
+                    if (chartData) updateChart(chartData);
+                });
+            }
+        });
+    }
+}
+
+/**
+ * Update chart with new data
+ */
+function updateChart(chartData) {
+    if (!currentChart || !chartData.data) return;
+    
+    const labels = chartData.data.map(point => {
+        const date = new Date(point.timestamp);
+        return date.toLocaleDateString();
+    });
+    
+    const prices = chartData.data.map(point => point.close);
+    
+    currentChart.data.labels = labels;
+    currentChart.data.datasets[0].data = prices;
+    currentChart.data.datasets[0].label = `${chartData.symbol} Price`;
+    
+    currentChart.update();
+}
+
+/**
+ * Initialize market indices display
+ */
+async function initializeMarketIndices() {
+    try {
+        let data;
+        if (USE_MOCK_API && window.MockStockAPI) {
+            data = await window.MockStockAPI.getMarketIndices();
+        } else {
+            const response = await fetch(`${API_BASE_URL}/market/indices`);
+            data = await response.json();
+        }
+        
+        // Update each index
+        const indexMappings = {
+            '^GSPC': { price: 'sp500Price', change: 'sp500Change' },
+            '^DJI': { price: 'dowPrice', change: 'dowChange' },
+            '^IXIC': { price: 'nasdaqPrice', change: 'nasdaqChange' }
+        };
+        
+        Object.entries(indexMappings).forEach(([symbol, elements]) => {
+            const indexData = data[symbol];
+            if (indexData) {
+                const priceElement = DOM.$(`#${elements.price}`);
+                const changeElement = DOM.$(`#${elements.change}`);
+                
+                if (priceElement) {
+                    priceElement.textContent = `$${indexData.current_price.toLocaleString()}`;
+                }
+                
+                if (changeElement) {
+                    const changeText = `${indexData.change >= 0 ? '+' : ''}${indexData.change.toFixed(2)} (${indexData.change_percent.toFixed(2)}%)`;
+                    changeElement.textContent = changeText;
+                    changeElement.className = `index-change ${indexData.change >= 0 ? 'positive' : 'negative'}`;
+                }
             }
         });
         
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('href') === '#' + current) {
-                item.classList.add('active');
+    } catch (error) {
+        console.error('Error loading market indices:', error);
+    }
+}
+
+/**
+ * Initialize auto-updates
+ */
+function initializeAutoUpdates() {
+    // Update data every 30 seconds during market hours
+    updateTimer = setInterval(() => {
+        if (currentSymbol) {
+            loadStockData(currentSymbol);
+        }
+        initializeMarketIndices();
+    }, UPDATE_INTERVAL);
+    
+    // Clear timer when page is hidden
+    DOM.on(document, 'visibilitychange', function() {
+        if (document.hidden) {
+            clearInterval(updateTimer);
+        } else {
+            initializeAutoUpdates();
+        }
+    });
+}
+
+/**
+ * Initialize contact form functionality
+ */
+function initializeContactForm() {
+    const form = DOM.$('#contactForm');
+    if (!form) return;
+    
+    const messageField = DOM.$('#message');
+    const charCount = DOM.$('#charCount');
+    
+    // Character counter
+    if (messageField && charCount) {
+        DOM.on(messageField, 'input', function() {
+            const count = this.value.length;
+            charCount.textContent = count;
+            
+            if (count > 700) {
+                charCount.parentNode.classList.add('warning');
+            } else {
+                charCount.parentNode.classList.remove('warning');
             }
         });
     }
     
-    window.addEventListener('scroll', updateActiveNav);
-    updateActiveNav(); // Call once on load
-}
-
-/**
- * Initialize contact form with validation
- */
-function initializeContactForm() {
-    const form = DOM.$('.contact-form');
-    
-    if (!form) return;
-    
+    // Form submission
     DOM.on(form, 'submit', async function(e) {
         e.preventDefault();
         
@@ -78,69 +437,77 @@ function initializeContactForm() {
         const data = {
             name: formData.get('name'),
             email: formData.get('email'),
+            subject: formData.get('subject'),
             message: formData.get('message')
         };
         
-        // Validate form data
         if (!validateContactForm(data)) {
             return;
         }
         
         // Show loading state
-        const submitButton = form.querySelector('button[type="submit"]');
-        const originalText = submitButton.textContent;
-        submitButton.textContent = 'Sending...';
-        submitButton.disabled = true;
+        const submitBtn = DOM.$('#submitBtn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline';
+        submitBtn.disabled = true;
         
         try {
-            // Simulate API call (replace with actual endpoint)
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            // Simulate email sending (in production, this would call your email API)
+            await new Promise(resolve => setTimeout(resolve, 2000));
             
             // Show success message
-            showAlert('Message sent successfully! We\'ll get back to you soon.', 'success');
-            form.reset();
+            form.style.display = 'none';
+            DOM.$('#successMessage').style.display = 'block';
             
         } catch (error) {
             console.error('Error sending message:', error);
-            showAlert('Failed to send message. Please try again later.', 'danger');
+            showError('Failed to send message. Please try again later.');
         } finally {
-            // Reset button state
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
         }
     });
 }
 
 /**
- * Validate contact form data
+ * Validate contact form
  */
 function validateContactForm(data) {
     let isValid = true;
     
     // Clear previous errors
-    DOM.$$('.error-message').forEach(error => error.remove());
+    DOM.$$('.error-message').forEach(error => {
+        error.classList.remove('show');
+    });
     
     // Validate name
-    if (!Validate.required(data.name)) {
-        showFieldError('name', 'Name is required');
+    if (!data.name || data.name.trim().length < 2) {
+        showFieldError('nameError', 'Name must be at least 2 characters long');
         isValid = false;
     }
     
     // Validate email
-    if (!Validate.required(data.email)) {
-        showFieldError('email', 'Email is required');
+    if (!data.email || !isValidEmail(data.email)) {
+        showFieldError('emailError', 'Please enter a valid email address');
         isValid = false;
-    } else if (!Validate.email(data.email)) {
-        showFieldError('email', 'Please enter a valid email address');
+    }
+    
+    // Validate subject
+    if (!data.subject) {
+        showFieldError('subjectError', 'Please select a subject');
         isValid = false;
     }
     
     // Validate message
-    if (!Validate.required(data.message)) {
-        showFieldError('message', 'Message is required');
+    if (!data.message || data.message.trim().length < 10) {
+        showFieldError('messageError', 'Message must be at least 10 characters long');
         isValid = false;
-    } else if (!Validate.minLength(data.message, 10)) {
-        showFieldError('message', 'Message must be at least 10 characters long');
+    } else if (data.message.length > 750) {
+        showFieldError('messageError', 'Message cannot exceed 750 characters');
         isValid = false;
     }
     
@@ -148,133 +515,80 @@ function validateContactForm(data) {
 }
 
 /**
- * Show field validation error
+ * Show field error
  */
-function showFieldError(fieldName, message) {
-    const field = DOM.$(`#${fieldName}`);
-    if (!field) return;
+function showFieldError(errorId, message) {
+    const errorElement = DOM.$(`#${errorId}`);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.classList.add('show');
+    }
+}
+
+/**
+ * Utility functions
+ */
+function formatNumber(num) {
+    if (!num) return 'N/A';
+    return num.toLocaleString();
+}
+
+function formatMarketCap(cap) {
+    if (!cap) return 'N/A';
     
+    if (cap >= 1e12) {
+        return `$${(cap / 1e12).toFixed(2)}T`;
+    } else if (cap >= 1e9) {
+        return `$${(cap / 1e9).toFixed(2)}B`;
+    } else if (cap >= 1e6) {
+        return `$${(cap / 1e6).toFixed(2)}M`;
+    } else {
+        return `$${cap.toLocaleString()}`;
+    }
+}
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+function showLoadingState() {
+    const priceElement = DOM.$('#currentPrice');
+    const changeElement = DOM.$('#priceChange');
+    
+    if (priceElement) priceElement.textContent = 'Loading...';
+    if (changeElement) changeElement.textContent = '--';
+}
+
+function showError(message) {
+    // Create and show error notification
     const errorDiv = DOM.create('div', {
-        className: 'error-message',
-        style: 'color: var(--danger-color); font-size: 0.875rem; margin-top: 0.25rem;'
-    }, message);
-    
-    field.parentNode.appendChild(errorDiv);
-    field.style.borderColor = 'var(--danger-color)';
-    
-    // Remove error on input
-    DOM.on(field, 'input', function() {
-        const existingError = field.parentNode.querySelector('.error-message');
-        if (existingError) {
-            existingError.remove();
-        }
-        field.style.borderColor = '';
-    });
-}
-
-/**
- * Initialize CTA button functionality
- */
-function initializeCTAButton() {
-    const ctaButton = DOM.$('.cta-button');
-    
-    if (!ctaButton) return;
-    
-    DOM.on(ctaButton, 'click', function() {
-        const resourcesSection = DOM.$('#resources');
-        if (resourcesSection) {
-            resourcesSection.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-}
-
-/**
- * Initialize scroll animations
- */
-function initializeAnimations() {
-    // Add fade-in animation for cards when they come into view
-    const cards = DOM.$$('.card, .tool-item');
-    
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    cards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
-    });
-}
-
-/**
- * Show alert message
- */
-function showAlert(message, type = 'info') {
-    const alertDiv = DOM.create('div', {
-        className: `alert alert-${type}`,
+        className: 'error-notification',
         style: `
             position: fixed;
             top: 20px;
             right: 20px;
+            background-color: var(--metallic-red);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
             z-index: 1000;
-            max-width: 400px;
-            animation: slideInRight 0.3s ease;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
         `
     }, message);
     
-    // Add close button
-    const closeButton = DOM.create('button', {
-        style: `
-            background: none;
-            border: none;
-            float: right;
-            font-size: 1.2rem;
-            cursor: pointer;
-            margin-left: 1rem;
-        `
-    }, '×');
+    document.body.appendChild(errorDiv);
     
-    DOM.on(closeButton, 'click', function() {
-        alertDiv.remove();
-    });
-    
-    alertDiv.appendChild(closeButton);
-    document.body.appendChild(alertDiv);
-    
-    // Auto-remove after 5 seconds
     setTimeout(() => {
-        if (alertDiv.parentNode) {
-            alertDiv.remove();
+        if (errorDiv.parentNode) {
+            errorDiv.remove();
         }
     }, 5000);
 }
 
-// Add CSS animation keyframes
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
+// Clean up on page unload
+window.addEventListener('beforeunload', function() {
+    if (updateTimer) {
+        clearInterval(updateTimer);
     }
-`;
-document.head.appendChild(style);
+});
