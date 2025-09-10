@@ -2,10 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="google-adsense-account" content="ca-pub-7710040313464623">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Stock Market Directory - Your comprehensive guide to stock market resources">
+    <meta name="description" content="Stock Market Directory - Your comprehensive real-time stock market data, charts, and analysis tools. Search stocks, view NYSE data, and track market performance.">
+    <meta name="keywords" content="stock market, stock charts, NYSE, real-time stock data, stock analysis, financial markets, stock prices, market directory">
     <meta name="author" content="Nibert Investments">
-    <title>Stock Market Directory</title>
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="Stock Market Directory - Real-Time Stock Data & Charts">
+    <meta property="og:description" content="Access real-time stock market data, interactive charts, and comprehensive market analysis tools. Search any stock symbol and get instant market insights.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80">
+    <meta property="og:image:alt" content="Stock market charts and financial data visualization">
+    <meta property="og:url" content="https://www.stockmarketdirectory.org/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Stock Market Directory">
+    <title>Stock Market Directory - Real-Time Stock Data & Charts</title>
+    <link rel="canonical" href="https://www.stockmarketdirectory.org/">
+    
+    <!-- Google AdSense Auto Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7710040313464623"
+         crossorigin="anonymous"></script>
     
     <!-- Shared CSS -->
     <link rel="stylesheet" href="../../shared/css/normalize.css">
@@ -13,6 +29,9 @@
     
     <!-- Project-specific CSS -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Chart.js for stock charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
@@ -23,11 +42,9 @@
             <div class="container">
                 <h1 class="logo">Stock Market Directory</h1>
                 <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#resources">Resources</a></li>
-                    <li><a href="#tools">Tools</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
         </nav>
@@ -36,107 +53,103 @@
     <main>
         <section id="home" class="hero">
             <div class="container">
-                <h1>Welcome to Stock Market Directory</h1>
-                <p class="lead">Your comprehensive guide to stock market resources, tools, and information.</p>
-                <button class="cta-button">Get Started</button>
+                <h1>Real-Time Stock Market Data</h1>
+                <p class="lead">Search any stock symbol and get instant access to real-time market data, charts, and analysis.</p>
+                
+                <!-- Stock Search Bar -->
+                <div class="stock-search-container">
+                    <div class="search-form">
+                        <input type="text" id="stockSymbol" placeholder="Enter stock symbol (e.g., AAPL, MSFT, GOOGL)" maxlength="10">
+                        <button id="searchBtn" class="search-button">Search</button>
+                    </div>
+                    <div class="search-suggestions" id="searchSuggestions"></div>
+                </div>
             </div>
         </section>
 
-        <section id="resources" class="resources">
+        <section id="chart-section" class="chart-display">
             <div class="container">
-                <h2>Market Resources</h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Market Data</h3>
-                            </div>
-                            <div class="card-body">
-                                <p>Real-time and historical market data for informed decision making.</p>
-                                <a href="#" class="button">Explore Data</a>
-                            </div>
-                        </div>
+                <div class="chart-header">
+                    <h2 id="chartTitle">NYSE Composite Index</h2>
+                    <div class="chart-controls">
+                        <select id="timeRange">
+                            <option value="1d">1 Day</option>
+                            <option value="5d">5 Days</option>
+                            <option value="1mo">1 Month</option>
+                            <option value="3mo">3 Months</option>
+                            <option value="6mo">6 Months</option>
+                            <option value="1y" selected>1 Year</option>
+                            <option value="2y">2 Years</option>
+                            <option value="5y">5 Years</option>
+                        </select>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Analysis Tools</h3>
-                            </div>
-                            <div class="card-body">
-                                <p>Professional-grade tools for technical and fundamental analysis.</p>
-                                <a href="#" class="button">View Tools</a>
-                            </div>
+                </div>
+                
+                <!-- Stock Price Display -->
+                <div class="price-display" id="priceDisplay">
+                    <div class="current-price">
+                        <span class="price-label">Current Price:</span>
+                        <span class="price-value" id="currentPrice">Loading...</span>
+                        <span class="price-change" id="priceChange">--</span>
+                    </div>
+                    <div class="market-status" id="marketStatus">Market Closed</div>
+                </div>
+                
+                <!-- Chart Container -->
+                <div class="chart-container">
+                    <canvas id="stockChart"></canvas>
+                </div>
+                
+                <!-- Stock Info -->
+                <div class="stock-info" id="stockInfo">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Volume:</span>
+                            <span class="info-value" id="volume">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Market Cap:</span>
+                            <span class="info-value" id="marketCap">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">P/E Ratio:</span>
+                            <span class="info-value" id="peRatio">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">52W High:</span>
+                            <span class="info-value" id="high52w">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">52W Low:</span>
+                            <span class="info-value" id="low52w">--</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Dividend Yield:</span>
+                            <span class="info-value" id="dividendYield">--</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="tools" class="tools">
+        <section id="market-overview" class="market-overview">
             <div class="container">
-                <h2>Trading Tools</h2>
-                <div class="row">
-                    <div class="col-4">
-                        <div class="tool-item">
-                            <h4>Portfolio Tracker</h4>
-                            <p>Track your investments and performance.</p>
-                        </div>
+                <h2>Market Overview</h2>
+                <div class="market-indices">
+                    <div class="index-card" data-symbol="^GSPC">
+                        <h3>S&P 500</h3>
+                        <div class="index-price" id="sp500Price">Loading...</div>
+                        <div class="index-change" id="sp500Change">--</div>
                     </div>
-                    <div class="col-4">
-                        <div class="tool-item">
-                            <h4>Stock Screener</h4>
-                            <p>Find stocks that match your criteria.</p>
-                        </div>
+                    <div class="index-card" data-symbol="^DJI">
+                        <h3>Dow Jones</h3>
+                        <div class="index-price" id="dowPrice">Loading...</div>
+                        <div class="index-change" id="dowChange">--</div>
                     </div>
-                    <div class="col-4">
-                        <div class="tool-item">
-                            <h4>Market News</h4>
-                            <p>Stay updated with latest market news.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="about">
-            <div class="container">
-                <h2>About Stock Market Directory</h2>
-                <p>Stock Market Directory is a comprehensive platform designed to provide investors and traders with the tools, resources, and information they need to make informed decisions in the financial markets.</p>
-                <p>Our mission is to democratize access to professional-grade market analysis tools and educational resources.</p>
-            </div>
-        </section>
-
-        <section id="contact" class="contact">
-            <div class="container">
-                <h2>Contact Us</h2>
-                <div class="row">
-                    <div class="col-6">
-                        <form class="contact-form">
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <input type="text" id="name" name="name" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Message:</label>
-                                <textarea id="message" name="message" rows="5" required></textarea>
-                            </div>
-                            <button type="submit">Send Message</button>
-                        </form>
-                    </div>
-                    <div class="col-6">
-                        <div class="contact-info">
-                            <h4>Get in Touch</h4>
-                            <p>Have questions about our platform or need assistance? We're here to help.</p>
-                            <ul>
-                                <li>Email: info@stockmarketdirectory.org</li>
-                                <li>Phone: (555) 123-4567</li>
-                                <li>Hours: Monday - Friday, 9 AM - 5 PM EST</li>
-                            </ul>
-                        </div>
+                    <div class="index-card" data-symbol="^IXIC">
+                        <h3>NASDAQ</h3>
+                        <div class="index-price" id="nasdaqPrice">Loading...</div>
+                        <div class="index-change" id="nasdaqChange">--</div>
                     </div>
                 </div>
             </div>
@@ -152,6 +165,9 @@
 
     <!-- Shared JavaScript -->
     <script src="../../shared/js/utils.js"></script>
+    
+    <!-- Mock API for development -->
+    <script src="js/mock-api.js"></script>
     
     <!-- Project-specific JavaScript -->
     <script src="js/main.js"></script>
