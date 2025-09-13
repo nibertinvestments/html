@@ -1,6 +1,13 @@
 # HTML Projects Repository
 
-A structured environment for housing multiple HTML projects with shared resources, development tools, and learning materials. Perfect for organizing web development projects and creating a consistent development workflow.
+A structured environment for housing multiple HTML projects with shared resources, development tools, and learning materials. This repository currently hosts the **Stock Market Directory** project - a real-time stock market data and charting application.
+
+## 🌐 Live Website
+
+**Stock Market Directory**: [https://stockmarketdirectory.org](https://stockmarketdirectory.org)
+- **Status**: Live (may experience intermittent issues with external dependencies)
+- **Primary Project**: Real-time stock market data, charts, and analysis tools
+- **Known Issues**: Charts may not display due to CDN blocking or API limitations (see [Troubleshooting](#-troubleshooting))
 
 ## 🚀 Quick Start
 
@@ -28,8 +35,13 @@ A structured environment for housing multiple HTML projects with shared resource
 
 ```
 ├── projects/              # All your HTML projects
-│   ├── template/          # Project template with modern HTML5 boilerplate
-│   └── stockmarketdirectory/  # Example project
+│   └── template/          # Project template with modern HTML5 boilerplate
+├── Stock Market Directory # Main project (root level files)
+│   ├── index.html         # Stock market data and charts application
+│   ├── about.html         # About page
+│   ├── contact.html       # Contact information
+│   ├── main.js           # Application logic and API integration
+│   └── style.css         # Application styles
 ├── shared/                # Shared resources across all projects
 │   ├── css/              # Normalize.css, base styles, utilities
 │   ├── js/               # Utility functions (DOM, HTTP, storage, etc.)
@@ -142,24 +154,93 @@ Animate.slideDown(element);
 - **[Getting Started](docs/getting-started.md)** - Setup and first project
 - **[Project Guidelines](docs/project-guidelines.md)** - Best practices and conventions
 - **[Web Development Resources](docs/web-development-resources.md)** - Learning materials and tools
+- **[Troubleshooting Guide](docs/troubleshooting.md)** - Common issues and solutions
+- **[Deployment Guide](docs/deployment.md)** - Hosting and deployment instructions
 
-## 🎨 Example Projects
+## 🎨 Featured Project: Stock Market Directory
 
-### Included Template
-The `projects/template/` folder contains a fully functional example with:
-- Semantic HTML5 structure
-- Responsive navigation
-- Smooth scrolling
-- Modern CSS with custom properties
-- JavaScript utilities integration
+### Current Implementation
+The main project is a real-time stock market data application featuring:
+- Real-time stock price data via Polygon.io API
+- Interactive charts using Chart.js
+- Market overview with major indices (S&P 500, Dow Jones, NASDAQ)
+- Stock search functionality
+- Responsive design for mobile and desktop
 
-### Project Ideas
-- Personal portfolio
-- Landing pages
-- Todo applications
-- Weather apps
-- E-commerce product pages
-- Interactive dashboards
+### Technical Stack
+- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Charts**: Chart.js library
+- **API**: Polygon.io for real-time financial data
+- **Hosting**: Available at stockmarketdirectory.org
+- **Development**: Live-server for local development
+
+### Known Limitations
+- External dependencies may be blocked in some environments
+- API rate limits may affect real-time data updates
+- Requires active internet connection for full functionality
+- Chart rendering depends on CDN availability
+
+## 🚨 Troubleshooting
+
+### Charts Not Displaying
+The Stock Market Directory application uses Chart.js for data visualization. If charts are not loading:
+
+**Common Causes:**
+- CDN blocking (Chart.js loaded from cdn.jsdelivr.net)
+- Ad blockers preventing external script loading
+- Network connectivity issues
+- Browser security policies blocking third-party resources
+
+**Solutions:**
+1. **Disable ad blockers** temporarily to test chart functionality
+2. **Check browser console** for script loading errors
+3. **Verify network connectivity** to CDN resources
+4. **Alternative**: Download Chart.js locally and update script references in index.html
+
+### Real-Time Data Issues
+The application fetches real-time stock data from Polygon.io API:
+
+**Common Issues:**
+- API rate limiting (free tier limitations)
+- API key authentication issues
+- CORS (Cross-Origin Resource Sharing) restrictions
+- Network blocking of financial APIs
+
+**Current Status:**
+- Data may show "Loading..." indefinitely due to API restrictions
+- External API dependencies may be unreliable in certain environments
+- Consider implementing fallback data or offline mode
+
+### Development Server Issues
+```bash
+# If development server fails to start
+npm install          # Reinstall dependencies
+npm run serve-project # Start local server on port 3000
+```
+
+## 🏗️ Technical Debt & Improvement Roadmap
+
+### Immediate Issues to Address
+1. **Chart.js Dependency**: Download and host Chart.js locally to avoid CDN blocking
+2. **API Reliability**: Implement fallback data sources or offline mode
+3. **Error Handling**: Add proper error handling for API failures
+4. **Loading States**: Improve user feedback during data loading
+
+### Recommended Improvements
+1. **Progressive Web App (PWA)**: Add offline functionality
+2. **Data Caching**: Implement client-side data caching
+3. **Alternative APIs**: Research backup data sources
+4. **Error Boundaries**: Add comprehensive error handling
+5. **Performance**: Optimize asset loading and rendering
+6. **Accessibility**: Improve screen reader support for charts
+7. **Testing**: Add automated testing for critical functionality
+
+### Future Enhancements
+- Real-time WebSocket connections for live data
+- Portfolio tracking and management features
+- Advanced charting tools and technical indicators
+- Mobile app development
+- User authentication and personalization
 
 ## 🌐 Browser Support
 
@@ -181,11 +262,26 @@ MIT License - feel free to use this structure for your own projects!
 
 ## 🆘 Getting Help
 
+### Quick References
 - Run `npm run help` for quick reference
 - Check the documentation in the `docs/` folder
 - Look at the template project for examples
 - Use browser developer tools for debugging
 
+### Common Support Topics
+1. **Charts not loading**: See [Troubleshooting](#-troubleshooting) section
+2. **API data issues**: Check network connectivity and API status
+3. **Development server**: Ensure Node.js and npm are properly installed
+4. **Deployment**: Reference the deployment guide for hosting options
+
+### Community Resources
+- [MDN Web Docs](https://developer.mozilla.org/) - Comprehensive web development reference
+- [Stack Overflow](https://stackoverflow.com/) - Programming questions and answers
+- [Chart.js Documentation](https://www.chartjs.org/docs/) - Charting library reference
+- [Polygon.io API Docs](https://polygon.io/docs/) - Financial data API documentation
+
 ---
 
-**Happy coding!** 🎉 Start building amazing web projects with this structured, developer-friendly environment.
+**Current Status**: Active development with focus on reliability and user experience improvements.
+
+**Nibert Investments** - Building practical web applications for financial analysis and market research.
