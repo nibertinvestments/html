@@ -172,8 +172,40 @@ Storage.set('user-preferences', { theme: 'dark' });
    - Ensure script files are loaded before use
    - Check for typos in function names
 
+## Troubleshooting
+
+### Common Issues
+
+1. **Server won't start**
+   - Make sure Node.js is installed
+   - Run `npm install` to install dependencies
+   - Check if port 3000 is available
+
+2. **Styles not loading**
+   - Check file paths in your HTML
+   - Ensure CSS files exist in the correct location
+   - Check browser console for 404 errors
+
+3. **JavaScript errors**
+   - Check browser console for error messages
+   - Ensure script files are loaded before use
+   - Check for typos in function names
+
+4. **Charts not displaying (Stock Market Directory)**
+   - Disable ad blockers temporarily
+   - Check browser console for Chart.js loading errors
+   - Verify network connectivity to CDN resources
+   - See [Troubleshooting Guide](troubleshooting.md) for detailed solutions
+
+5. **API data not loading**
+   - Check network connectivity
+   - Verify API keys are valid
+   - Check for CORS or rate limiting issues
+   - See [Troubleshooting Guide](troubleshooting.md) for API-specific solutions
+
 ### Getting Help
 
+- Check the [Troubleshooting Guide](troubleshooting.md) for detailed solutions
 - Check the [project guidelines](project-guidelines.md)
 - Browse [web development resources](web-development-resources.md)
 - Use browser developer tools for debugging

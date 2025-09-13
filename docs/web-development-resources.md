@@ -157,6 +157,36 @@ This document provides a curated list of resources to help you learn and improve
 6. **Quiz App** - Interactive user interfaces
 7. **E-commerce Product Page** - Complex layouts and interactions
 8. **Blog** - Content management and responsive design
+9. **Stock Market Directory** - Real-time data visualization (featured project)
+10. **Financial Dashboard** - Charts and analytics
+11. **Cryptocurrency Tracker** - API integration and real-time updates
+12. **Investment Calculator** - Complex calculations and form handling
+
+## Financial Application Development
+
+### APIs for Financial Data
+- **[Polygon.io](https://polygon.io/)** - Real-time and historical market data (used in this project)
+- **[Alpha Vantage](https://www.alphavantage.co/)** - Free stock APIs with generous limits
+- **[IEX Cloud](https://iexcloud.io/)** - Developer-friendly financial data API
+- **[Yahoo Finance API](https://rapidapi.com/apidojo/api/yahoo-finance1/)** - Unofficial but widely used
+- **[Quandl](https://www.quandl.com/)** - Economic and financial data
+- **[CoinGecko API](https://www.coingecko.com/en/api)** - Cryptocurrency data
+
+### Charting Libraries
+- **[Chart.js](https://www.chartjs.org/)** - Simple and flexible (used in this project)
+- **[D3.js](https://d3js.org/)** - Data-driven documents for complex visualizations
+- **[ApexCharts](https://apexcharts.com/)** - Modern charting library with great features
+- **[TradingView Charting Library](https://www.tradingview.com/charting-library/)** - Professional trading charts
+- **[Plotly.js](https://plotly.com/javascript/)** - Scientific charting and graphing
+- **[Highcharts](https://www.highcharts.com/)** - Professional data visualization
+
+### Financial Data Concepts
+- **[Understanding Stock Data](https://www.investopedia.com/articles/basics/06/invest1000.asp)** - Basic investment concepts
+- **[Market Data Types](https://polygon.io/blog/market-data-types-explained/)** - Real-time vs delayed vs historical
+- **[Financial APIs Comparison](https://blog.rapidapi.com/best-stock-api/)** - Choosing the right data source
+- **[Building Trading Apps](https://www.freecodecamp.org/news/build-a-stock-trading-app-from-scratch/)** - Complete tutorial guide
+- **[API Rate Limiting](https://blog.bitsrc.io/api-rate-limiting-in-node-js-97c49270e65)** - Handling API constraints
+- **[Real-time Data Challenges](https://www.toptal.com/api-developers/5-golden-rules-for-designing-a-great-api)** - Best practices for data APIs
 
 ## Communities and Forums
 

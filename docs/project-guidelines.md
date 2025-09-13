@@ -241,6 +241,75 @@ const date = Format.date(new Date());
 - Validate HTML and CSS
 - Check for console errors
 
+## Deployment and Hosting Guidelines
+
+### Pre-deployment Checklist
+
+Before deploying any project, ensure:
+
+- [ ] All code is linted and validated (`npm run build`)
+- [ ] No console errors in browser developer tools
+- [ ] Responsive design tested on multiple screen sizes
+- [ ] Cross-browser compatibility verified
+- [ ] External dependencies hosted locally when possible
+- [ ] API keys and sensitive data handled securely
+- [ ] Performance optimized (images compressed, assets minified)
+
+### Hosting Recommendations
+
+#### Static Site Hosting
+- **GitHub Pages**: Free, integrated with repository
+- **Netlify**: Excellent performance, form handling
+- **Vercel**: Great developer experience, edge functions
+- **Traditional hosting**: Shared hosting for simple deployments
+
+#### Domain and SSL
+- Use HTTPS for all production deployments
+- Consider custom domains for professional projects
+- Implement proper SSL certificate management
+- Configure appropriate DNS records
+
+### Production Configuration
+
+#### Asset Management
+```html
+<!-- Host critical dependencies locally -->
+<script src="assets/js/chart.min.js"></script>
+<!-- Instead of CDN -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+```
+
+#### Environment-specific Settings
+```javascript
+// Use different configurations for development vs production
+const CONFIG = {
+    development: {
+        API_URL: 'http://localhost:3000/api',
+        DEBUG: true
+    },
+    production: {
+        API_URL: 'https://api.example.com',
+        DEBUG: false
+    }
+};
+```
+
+### Maintenance and Monitoring
+
+#### Regular Tasks
+- **Weekly**: Check site accessibility and functionality
+- **Monthly**: Update dependencies and security patches
+- **Quarterly**: Review performance and user feedback
+
+#### Error Handling
+```javascript
+// Implement proper error handling for production
+window.addEventListener('error', function(event) {
+    console.error('Application error:', event.error);
+    // Optionally send to monitoring service
+});
+```
+
 ## Version Control
 
 ### Git Practices
